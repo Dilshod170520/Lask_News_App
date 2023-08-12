@@ -9,23 +9,43 @@
 /* Begin PBXBuildFile section */
 		526E17742A874F2700F9E865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17732A874F2700F9E865 /* AppDelegate.swift */; };
 		526E17762A874F2700F9E865 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17752A874F2700F9E865 /* SceneDelegate.swift */; };
-		526E17782A874F2700F9E865 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17772A874F2700F9E865 /* ViewController.swift */; };
-		526E177B2A874F2700F9E865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E17792A874F2700F9E865 /* Main.storyboard */; };
 		526E177E2A874F2700F9E865 /* Lask_News_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 526E177C2A874F2700F9E865 /* Lask_News_App.xcdatamodeld */; };
 		526E17802A874F2900F9E865 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E177F2A874F2900F9E865 /* Assets.xcassets */; };
 		526E17832A874F2900F9E865 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E17812A874F2900F9E865 /* LaunchScreen.storyboard */; };
+		526E179E2A87507500F9E865 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17912A87507500F9E865 /* TabBar.swift */; };
+		526E179F2A87507500F9E865 /* SavedNewsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17922A87507500F9E865 /* SavedNewsVC.swift */; };
+		526E17A02A87507500F9E865 /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17932A87507500F9E865 /* ExploreVC.swift */; };
+		526E17A12A87507500F9E865 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17942A87507500F9E865 /* WelcomeViewController.swift */; };
+		526E17A22A87507500F9E865 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17952A87507500F9E865 /* ArticleViewController.swift */; };
+		526E17A32A87507500F9E865 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17962A87507500F9E865 /* HomeVC.swift */; };
+		526E17A42A87507500F9E865 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17982A87507500F9E865 /* CategoryVC.swift */; };
+		526E17A52A87507500F9E865 /* ExploreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E179B2A87507500F9E865 /* ExploreCell.swift */; };
+		526E17A62A87507500F9E865 /* NormalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E179C2A87507500F9E865 /* NormalCollectionViewCell.swift */; };
+		526E17A72A87507500F9E865 /* LargeNewsColViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E179D2A87507500F9E865 /* LargeNewsColViewCell.swift */; };
+		65AB67690FC2262307C28005 /* Pods_Lask_News_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFF6C0BFD27612FBA380CC0 /* Pods_Lask_News_App.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18D58520894C77FEED2D5385 /* Pods-Lask_News_App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lask_News_App.debug.xcconfig"; path = "Target Support Files/Pods-Lask_News_App/Pods-Lask_News_App.debug.xcconfig"; sourceTree = "<group>"; };
+		2BFF6C0BFD27612FBA380CC0 /* Pods_Lask_News_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lask_News_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E17702A874F2700F9E865 /* Lask_News_App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lask_News_App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E17732A874F2700F9E865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		526E17752A874F2700F9E865 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		526E17772A874F2700F9E865 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		526E177A2A874F2700F9E865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		526E177D2A874F2700F9E865 /* Lask_News_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lask_News_App.xcdatamodel; sourceTree = "<group>"; };
 		526E177F2A874F2900F9E865 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		526E17822A874F2900F9E865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		526E17842A874F2900F9E865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		526E17912A87507500F9E865 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		526E17922A87507500F9E865 /* SavedNewsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedNewsVC.swift; sourceTree = "<group>"; };
+		526E17932A87507500F9E865 /* ExploreVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
+		526E17942A87507500F9E865 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		526E17952A87507500F9E865 /* ArticleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
+		526E17962A87507500F9E865 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		526E17982A87507500F9E865 /* CategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
+		526E179B2A87507500F9E865 /* ExploreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreCell.swift; sourceTree = "<group>"; };
+		526E179C2A87507500F9E865 /* NormalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalCollectionViewCell.swift; sourceTree = "<group>"; };
+		526E179D2A87507500F9E865 /* LargeNewsColViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeNewsColViewCell.swift; sourceTree = "<group>"; };
+		78A64522C908B3689435AC95 /* Pods-Lask_News_App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lask_News_App.release.xcconfig"; path = "Target Support Files/Pods-Lask_News_App/Pods-Lask_News_App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +53,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65AB67690FC2262307C28005 /* Pods_Lask_News_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		41899A551A2FC44A8ED9CFB5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BFF6C0BFD27612FBA380CC0 /* Pods_Lask_News_App.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		526E17672A874F2700F9E865 = {
 			isa = PBXGroup;
 			children = (
 				526E17722A874F2700F9E865 /* Lask_News_App */,
 				526E17712A874F2700F9E865 /* Products */,
+				C41BFCE142E1CEA3A0C1CC9A /* Pods */,
+				41899A551A2FC44A8ED9CFB5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,14 +91,64 @@
 			children = (
 				526E17732A874F2700F9E865 /* AppDelegate.swift */,
 				526E17752A874F2700F9E865 /* SceneDelegate.swift */,
-				526E17772A874F2700F9E865 /* ViewController.swift */,
-				526E17792A874F2700F9E865 /* Main.storyboard */,
+				526E17902A87507500F9E865 /* Controller */,
+				526E17992A87507500F9E865 /* Model */,
+				526E179A2A87507500F9E865 /* View */,
 				526E177F2A874F2900F9E865 /* Assets.xcassets */,
 				526E17812A874F2900F9E865 /* LaunchScreen.storyboard */,
 				526E17842A874F2900F9E865 /* Info.plist */,
 				526E177C2A874F2700F9E865 /* Lask_News_App.xcdatamodeld */,
 			);
 			path = Lask_News_App;
+			sourceTree = "<group>";
+		};
+		526E17902A87507500F9E865 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				526E17912A87507500F9E865 /* TabBar.swift */,
+				526E17922A87507500F9E865 /* SavedNewsVC.swift */,
+				526E17932A87507500F9E865 /* ExploreVC.swift */,
+				526E17942A87507500F9E865 /* WelcomeViewController.swift */,
+				526E17952A87507500F9E865 /* ArticleViewController.swift */,
+				526E17962A87507500F9E865 /* HomeVC.swift */,
+				526E17972A87507500F9E865 /* ArticilsTabBar */,
+				526E17982A87507500F9E865 /* CategoryVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		526E17972A87507500F9E865 /* ArticilsTabBar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ArticilsTabBar;
+			sourceTree = "<group>";
+		};
+		526E17992A87507500F9E865 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		526E179A2A87507500F9E865 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				526E179B2A87507500F9E865 /* ExploreCell.swift */,
+				526E179C2A87507500F9E865 /* NormalCollectionViewCell.swift */,
+				526E179D2A87507500F9E865 /* LargeNewsColViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C41BFCE142E1CEA3A0C1CC9A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				18D58520894C77FEED2D5385 /* Pods-Lask_News_App.debug.xcconfig */,
+				78A64522C908B3689435AC95 /* Pods-Lask_News_App.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +158,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 526E17872A874F2900F9E865 /* Build configuration list for PBXNativeTarget "Lask_News_App" */;
 			buildPhases = (
+				B4237A234E576E86DB99638F /* [CP] Check Pods Manifest.lock */,
 				526E176C2A874F2700F9E865 /* Sources */,
 				526E176D2A874F2700F9E865 /* Frameworks */,
 				526E176E2A874F2700F9E865 /* Resources */,
+				FCEE35E18FB12EBD6234B4CF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -130,35 +213,77 @@
 			files = (
 				526E17832A874F2900F9E865 /* LaunchScreen.storyboard in Resources */,
 				526E17802A874F2900F9E865 /* Assets.xcassets in Resources */,
-				526E177B2A874F2700F9E865 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B4237A234E576E86DB99638F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Lask_News_App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FCEE35E18FB12EBD6234B4CF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Lask_News_App/Pods-Lask_News_App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Lask_News_App/Pods-Lask_News_App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lask_News_App/Pods-Lask_News_App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		526E176C2A874F2700F9E865 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				526E17782A874F2700F9E865 /* ViewController.swift in Sources */,
+				526E17A52A87507500F9E865 /* ExploreCell.swift in Sources */,
+				526E17A62A87507500F9E865 /* NormalCollectionViewCell.swift in Sources */,
+				526E17A72A87507500F9E865 /* LargeNewsColViewCell.swift in Sources */,
+				526E17A42A87507500F9E865 /* CategoryVC.swift in Sources */,
+				526E17A02A87507500F9E865 /* ExploreVC.swift in Sources */,
+				526E17A22A87507500F9E865 /* ArticleViewController.swift in Sources */,
 				526E177E2A874F2700F9E865 /* Lask_News_App.xcdatamodeld in Sources */,
+				526E17A32A87507500F9E865 /* HomeVC.swift in Sources */,
 				526E17742A874F2700F9E865 /* AppDelegate.swift in Sources */,
 				526E17762A874F2700F9E865 /* SceneDelegate.swift in Sources */,
+				526E179E2A87507500F9E865 /* TabBar.swift in Sources */,
+				526E179F2A87507500F9E865 /* SavedNewsVC.swift in Sources */,
+				526E17A12A87507500F9E865 /* WelcomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		526E17792A874F2700F9E865 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				526E177A2A874F2700F9E865 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		526E17812A874F2900F9E865 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -286,6 +411,7 @@
 		};
 		526E17882A874F2900F9E865 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 18D58520894C77FEED2D5385 /* Pods-Lask_News_App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -296,7 +422,7 @@
 				INFOPLIST_FILE = Lask_News_App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -314,6 +440,7 @@
 		};
 		526E17892A874F2900F9E865 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78A64522C908B3689435AC95 /* Pods-Lask_News_App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -324,7 +451,7 @@
 				INFOPLIST_FILE = Lask_News_App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -1,19 +1,21 @@
 //
-//  ViewController.swift
-//  Lask_News_App
+//  SavedNewsVC.swift
+//  NewsAppFirst
 //
-//  Created by MacBook Pro on 12/08/23.
+//  Created by MacBook Pro on 10/08/23.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class SavedNewsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
+    
 
+   
 
 }
-
