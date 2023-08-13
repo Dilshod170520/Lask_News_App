@@ -9,7 +9,7 @@ import UIKit
 
 class ExploreCell: UICollectionViewCell {
     
-    var identifier: String = "cell"
+    static let  identifier: String = "ExploreCell"
     
     let titleLabel: UILabel  = {
         let l = UILabel()
@@ -24,50 +24,23 @@ class ExploreCell: UICollectionViewCell {
         let image = UIImageView()
         image.image = UIImage(named: "ExploreImage")
         image.contentMode = .scaleAspectFill
-        image.image = UIImage(named: "")
-        return image
-        
-    }()
-    
-    let ownerImage: UIImageView = {
-        let image = UIImageView()
         image.image = UIImage(named: "ExploreImage")
-        image.contentMode = .scaleAspectFill
-        image.image = UIImage(named: "")
-        image.layer.cornerRadius = 5
+        image.frame = CGRect(x: 0, y: 0, width: 80, height: 112)
         return image
         
     }()
-    let ownerName: UILabel  = {
-        let l = UILabel()
-        l.text = "Jack Loo"
-        l.font = UIFont.systemFont(ofSize: 10, weight: .light)
-        l.textAlignment = .left
-        l.numberOfLines = 1
-   return l
-    }()
-    
-    let ownerStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing  = 5
-        stack.distribution = .fill
-        stack.alignment = .fill
-        return stack
-    }()
-    
-    
-    let mainStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing  = 10
-        stack.distribution = .fill
-        stack.alignment = .fill
-        return stack
-    }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.addSubview(newsImage)
+        newsImage.snp.makeConstraints { make in
+            make.top.right.bottom.equalToSuperview().inset(5)
+        }
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.left.top.bottom.equalToSuperview().inset(5)
+            make.right.equalTo(newsImage.snp.left)
+        }
     }
     
     required init?(coder: NSCoder) {

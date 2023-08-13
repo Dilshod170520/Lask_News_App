@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import BubbleTabBar
 
-class TabBar: UITabBarController {
+class TabBar: BubbleTabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,13 +18,15 @@ class TabBar: UITabBarController {
                        title: "Discover",
                        systemImageName: "list.bullet.rectangle.portrait"),
             
+            generateVC(vc: ExploreVC(),
+                       title: "Search",
+                       systemImageName: "magnifyingglass"),
+            
             generateVC(vc: CategoryVC(),
                        title: "Categories",
                        systemImageName: "list.bullet.rectangle.portrait"),
             
-            generateVC(vc: ExploreVC(),
-                       title: "Search",
-                       systemImageName: "magnifyingglass"),
+            
 
             generateVC(vc: SavedNewsVC(),
                        title: "Saved",

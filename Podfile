@@ -7,5 +7,6 @@ target 'Lask_News_App' do
 
   # Pods for Lask_News_App
 	pod 'SnapKit'
+	pod 'BubbleTabBar'
 
 end

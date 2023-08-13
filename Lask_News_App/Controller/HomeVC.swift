@@ -192,6 +192,14 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             return cell
         }
+    }
+    
+    // did select - > To Next VC : More info
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ArticleViewController()
+        vc.modalPresentationStyle = .fullScreen
         
+        self.present(vc, animated: true)
     }
 }

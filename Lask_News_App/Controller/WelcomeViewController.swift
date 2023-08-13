@@ -22,8 +22,6 @@ class WelcomeViewController: UIViewController {
         return image
     }()
     
-    
-    
     let contenerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -54,10 +52,10 @@ class WelcomeViewController: UIViewController {
     let button: UIButton = {
         let b = UIButton()
         b.setTitle("Explore ➜", for: .normal)
-        b.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
+        b.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         b.tintColor = .white
-        b.backgroundColor = .blue
-        b.layer.cornerRadius = 30
+        b.backgroundColor =  UIColor(named: "exploreBtnColer")
+        b.layer.cornerRadius = 25
         return b
     }()
     
@@ -102,8 +100,8 @@ class WelcomeViewController: UIViewController {
         button.snp.makeConstraints { make in
             make.top.equalTo(subTitleLabel.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
-            make.height.equalTo(60)
-            make.width.equalTo(200)
+            make.height.equalTo(50)
+            make.width.equalTo(140)
         }
         
         button.addTarget(self, action: #selector(explorBtnPressed), for: .touchUpInside)
@@ -111,9 +109,10 @@ class WelcomeViewController: UIViewController {
     }
     
     @objc func explorBtnPressed() {
-        let nav = HomeVC()
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
-    }    
+        let tabBar = TabBar()
+        tabBar.modalPresentationStyle = .fullScreen
+        present(tabBar, animated: true)
+    }
+    
 
 }

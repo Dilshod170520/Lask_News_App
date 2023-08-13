@@ -11,78 +11,124 @@ class ExploreVC: UIViewController {
     
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
-     return scroll
+        scroll.showsHorizontalScrollIndicator = false
+        return scroll
     }()
-    
-    let travelBtn: UIButton = {
-        let b = UIButton()
-        b.setTitle("Travel", for: .normal)
-        b.layer.cornerRadius = 15
-        b.tintColor = .black
-        b.frame = CGRect(x: 0, y: 0, width: 200, height: 30)
 
-        b.layer.borderColor = UIColor.systemBackground.cgColor
-        b.layer.borderWidth = 1.5
-        return b
+    
+    let collectionView: UICollectionView = {
+        let col = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        col.register(UINib(nibName: ExploreCell.identifier, bundle: <#T##Bundle?#>), forCellWithReuseIdentifier: <#T##String#>)
     }()
     
-    let entertanmentBtn: UIButton = {
-        let b = UIButton()
-        b.setTitle("Travel", for: .normal)
-        b.layer.cornerRadius = 15
-        b.tintColor = .black
-        b.frame = CGRect(x: 0, y: 0, width: 200, height: 30)
-
-        b.layer.borderColor = UIColor.systemBackground.cgColor
-        b.layer.borderWidth = 1.5
-        return b
-    }()
-    let texnologyBtn: UIButton = {
-        let b = UIButton()
-        b.setTitle("Travel", for: .normal)
-        b.layer.cornerRadius = 15
-        b.tintColor = .black
-        b.layer.borderColor = UIColor.systemBackground.cgColor
-        b.frame = CGRect(x: 0, y: 0, width: 200, height: 30)
-
-        b.layer.borderWidth = 1.5
-        return b
+    // Array for Category Title
+    var categoryNames: [String] = ["Technology", "Politics", "Sport", "World", "Science", "Weather"]
+    
+    let stack: UIStackView = {
+        let stack  = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing =  10
+        stack.alignment = .center
+        stack.distribution = .fillProportionally
+        return stack
     }()
     
-    let businessBtn: UIButton = {
-        let b = UIButton()
-        b.setTitle("Travel", for: .normal)
-        b.layer.cornerRadius = 15
-        b.tintColor = .black
-        b.layer.borderColor = UIColor.systemBackground.cgColor
-        b.frame = CGRect(x: 0, y: 0, width: 200, height: 30)
-        b.layer.borderWidth = 1.5
-        return b
-    }()
+    var categoryButtons = [UIButton]()
     
     
+    let searchController = UISearchController(searchResultsController: nil)
     
+    //MARK: -  ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+       setupSubviews()
         
-        let scrollView = UIScrollView(frame: view.bounds)
-        scrollView.contentSize = CGSize(width: view.frame.width + 50 , height: 40)
-               
-        [travelBtn,texnologyBtn, businessBtn , entertanmentBtn].forEach({ button in
-            
-            scrollView.addSubview(button)
-        })
         
-               view.addSubview(scrollView)
-        view.backgroundColor = .white
-        setNavBar()
-        
-       
     }
     
-    func setNavBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Explore", style: .plain, target: nil, action: nil)
+    
+    //MARK: - Setup Functions
+    func setupSubviews() {
+        // scroll View setup
+        categoryNames.forEach { (category) in
+            let button = UIButton()
+            button.addTarget(self,
+                             action: #selector(categoryBtnPressed(_:)),
+                             for: .touchUpInside)
+            button.configuration = .filled()
+            button.configuration?.baseBackgroundColor = .systemGray6
+            button.configuration?.title = category
+            button.configuration?.cornerStyle = .capsule
+            button.tag = categoryNames.firstIndex(of: category)!
+            
+            categoryButtons.append(button)
+            stack.addArrangedSubview(button)
+        }
+
+        //Set ScrollView
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(40)
+        }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .done, target: nil, action: nil)
+        //Set Stack View
+        scrollView.addSubview(stack)
+        stack.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.verticalEdges.equalToSuperview()
+            make.height.equalTo(40)
+        }
+        
+        view.backgroundColor = .white
+        setNavBar()
     }
+    func setNavBar() {
+        navigationItem.title = "Explore"
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [
+            // title text style setup
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25, weight: .semibold)
+        ]
+        appearance.titlePositionAdjustment = UIOffset(horizontal: -500,
+                                                      vertical: 0)
+        navigationController?.navigationBar.standardAppearance = appearance
+        // search button
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(searchBtnPressed))
+        navigationItem.searchController = searchController
+    }
+    
+    //MARK: - @objc functions
+    // Category Target func
+    @objc func categoryBtnPressed(_ sender: UIButton) {
+        
+        categoryButtons[sender.tag].configuration?.baseBackgroundColor = .systemBlue
+        categoryButtons[sender.tag].configuration?.baseForegroundColor = .white
+        
+    }
+    //Searchbar Target
+    @objc func searchBtnPressed() {
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.searchBar.placeholder = "Search artists"
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.delegate = self
+        
+        navigationItem.searchController = searchController
+        
+        searchController.searchBar.becomeFirstResponder()
+    }
+}
+
+extension ExploreVC: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        navigationItem.searchController?.searchBar.resignFirstResponder()
+    }
+    
 }

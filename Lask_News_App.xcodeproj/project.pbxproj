@@ -22,6 +22,8 @@
 		526E17A52A87507500F9E865 /* ExploreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E179B2A87507500F9E865 /* ExploreCell.swift */; };
 		526E17A62A87507500F9E865 /* NormalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E179C2A87507500F9E865 /* NormalCollectionViewCell.swift */; };
 		526E17A72A87507500F9E865 /* LargeNewsColViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E179D2A87507500F9E865 /* LargeNewsColViewCell.swift */; };
+		526E17AF2A8769C300F9E865 /* UIView_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17AE2A8769C300F9E865 /* UIView_Extensions.swift */; };
+		526E17B12A87A7CF00F9E865 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E17B02A87A7CF00F9E865 /* Storyboard.storyboard */; };
 		65AB67690FC2262307C28005 /* Pods_Lask_News_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFF6C0BFD27612FBA380CC0 /* Pods_Lask_News_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +47,8 @@
 		526E179B2A87507500F9E865 /* ExploreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreCell.swift; sourceTree = "<group>"; };
 		526E179C2A87507500F9E865 /* NormalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalCollectionViewCell.swift; sourceTree = "<group>"; };
 		526E179D2A87507500F9E865 /* LargeNewsColViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeNewsColViewCell.swift; sourceTree = "<group>"; };
+		526E17AE2A8769C300F9E865 /* UIView_Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Extensions.swift; sourceTree = "<group>"; };
+		526E17B02A87A7CF00F9E865 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		78A64522C908B3689435AC95 /* Pods-Lask_News_App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lask_News_App.release.xcconfig"; path = "Target Support Files/Pods-Lask_News_App/Pods-Lask_News_App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +95,8 @@
 			children = (
 				526E17732A874F2700F9E865 /* AppDelegate.swift */,
 				526E17752A874F2700F9E865 /* SceneDelegate.swift */,
+				526E17B02A87A7CF00F9E865 /* Storyboard.storyboard */,
+				526E17AD2A8769C300F9E865 /* Extensions */,
 				526E17902A87507500F9E865 /* Controller */,
 				526E17992A87507500F9E865 /* Model */,
 				526E179A2A87507500F9E865 /* View */,
@@ -141,13 +147,20 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		526E17AD2A8769C300F9E865 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				526E17AE2A8769C300F9E865 /* UIView_Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C41BFCE142E1CEA3A0C1CC9A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				18D58520894C77FEED2D5385 /* Pods-Lask_News_App.debug.xcconfig */,
 				78A64522C908B3689435AC95 /* Pods-Lask_News_App.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -213,6 +226,7 @@
 			files = (
 				526E17832A874F2900F9E865 /* LaunchScreen.storyboard in Resources */,
 				526E17802A874F2900F9E865 /* Assets.xcassets in Resources */,
+				526E17B12A87A7CF00F9E865 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +285,7 @@
 				526E17A42A87507500F9E865 /* CategoryVC.swift in Sources */,
 				526E17A02A87507500F9E865 /* ExploreVC.swift in Sources */,
 				526E17A22A87507500F9E865 /* ArticleViewController.swift in Sources */,
+				526E17AF2A8769C300F9E865 /* UIView_Extensions.swift in Sources */,
 				526E177E2A874F2700F9E865 /* Lask_News_App.xcdatamodeld in Sources */,
 				526E17A32A87507500F9E865 /* HomeVC.swift in Sources */,
 				526E17742A874F2700F9E865 /* AppDelegate.swift in Sources */,
