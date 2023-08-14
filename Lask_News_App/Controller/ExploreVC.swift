@@ -8,27 +8,24 @@
 import UIKit
 
 class ExploreVC: UIViewController {
-    
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.showsHorizontalScrollIndicator = false
         return scroll
     }()
-
+    
     private let collectionView: UICollectionView = {
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 60) // Set your desired cell height
-            
-            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 80) // Set your desired cell 
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ExploreCell.self, forCellWithReuseIdentifier: ExploreCell.identifier)
-            collectionView.backgroundColor = .white
-            return collectionView
-        }()
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
     
     // Array for Category Title
     var categoryNames: [String] = ["Technology", "Politics", "Sport", "World", "Science", "Weather"]
-    
     let stack: UIStackView = {
         let stack  = UIStackView()
         stack.axis = .horizontal
@@ -46,9 +43,9 @@ class ExploreVC: UIViewController {
     //MARK: -  ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-       setupSubviews()
+        setupSubviews()
         
-       
+        
         collectionView.dataSource = self
         collectionView.delegate = self
     }
@@ -70,7 +67,7 @@ class ExploreVC: UIViewController {
             categoryButtons.append(button)
             stack.addArrangedSubview(button)
         }
-
+        
         //Set ScrollView
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
@@ -157,12 +154,12 @@ extension ExploreVC: CollectionDelegates {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width - 64, height: 80)
     }
- 
+    
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        let inset = UIEdgeInsets(top: 0,
+        let inset = UIEdgeInsets(top: 20,
                                  left: 32,
                                  bottom: 0,
                                  right: 32)
@@ -170,10 +167,10 @@ extension ExploreVC: CollectionDelegates {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 24
+        return 30    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 50
     }
-    
-    
-    
     
 }

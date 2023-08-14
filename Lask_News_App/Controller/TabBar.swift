@@ -15,22 +15,22 @@ class TabBar: BubbleTabBarController {
         
         viewControllers = [
             generateVC(vc: HomeVC(),
-                       title: "Discover",
-                       systemImageName: "list.bullet.rectangle.portrait"),
+                       title: "Home",
+                       systemImageName: "house"),
             
             generateVC(vc: ExploreVC(),
                        title: "Search",
                        systemImageName: "magnifyingglass"),
             
-            generateVC(vc: CategoryVC(),
-                       title: "Categories",
-                       systemImageName: "list.bullet.rectangle.portrait"),
+            generateVC(vc: BookmarVc(),
+                       title: "Bookmark",
+                       systemImageName: "character.book.closed"), 
             
             
 
-            generateVC(vc: SavedNewsVC(),
-                       title: "Saved",
-                       systemImageName: "bookmark.fill"),
+            generateVC(vc: ProfielVC(),
+                       title: "Profile",
+                       systemImageName: "person"),
         
         ]
         setupTabBar()

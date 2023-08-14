@@ -23,10 +23,7 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .white
-        
-        
         setupNavBar()
         setupSubviews()
         setupColView()
@@ -36,10 +33,8 @@ class HomeVC: UIViewController {
     
     func setupSubviews() {
         // colView
-        
         view.addSubview(colView)
         // constraints of ColView
-        
         colView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -49,12 +44,9 @@ class HomeVC: UIViewController {
         navigationItem.title = "Wednesday, November 29"
         
         let appearance = UINavigationBarAppearance()
-        
         appearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.systemGray2
-        ]
-        
-        
+        ]        
         appearance.titlePositionAdjustment = UIOffset(horizontal: -100,
                                                       vertical: 0)
         
