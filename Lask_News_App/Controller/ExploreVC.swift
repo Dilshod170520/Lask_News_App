@@ -15,12 +15,16 @@ class ExploreVC: UIViewController {
         return scroll
     }()
 
-    
-    let collectionView: UICollectionView = {
-        let col = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
-        col.register(UINib(nibName: ExploreCell.identifier, bundle: <#T##Bundle?#>), forCellWithReuseIdentifier: <#T##String#>)
-    }()
+    private let collectionView: UICollectionView = {
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 60) // Set your desired cell height
+            
+            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(ExploreCell.self, forCellWithReuseIdentifier: ExploreCell.identifier)
+            collectionView.backgroundColor = .white
+            return collectionView
+        }()
     
     // Array for Category Title
     var categoryNames: [String] = ["Technology", "Politics", "Sport", "World", "Science", "Weather"]
@@ -44,9 +48,10 @@ class ExploreVC: UIViewController {
         super.viewDidLoad()
        setupSubviews()
         
-        
+       
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
-    
     
     //MARK: - Setup Functions
     func setupSubviews() {
@@ -81,6 +86,12 @@ class ExploreVC: UIViewController {
             make.verticalEdges.equalToSuperview()
             make.height.equalTo(40)
         }
+        view.addSubview(collectionView)
+        
+        collectionView.snp.makeConstraints { make in
+            make.bottom.left.right.equalToSuperview()
+            make.top.equalTo(scrollView.snp.bottom)
+        }
         
         view.backgroundColor = .white
         setNavBar()
@@ -106,10 +117,8 @@ class ExploreVC: UIViewController {
     //MARK: - @objc functions
     // Category Target func
     @objc func categoryBtnPressed(_ sender: UIButton) {
-        
         categoryButtons[sender.tag].configuration?.baseBackgroundColor = .systemBlue
         categoryButtons[sender.tag].configuration?.baseForegroundColor = .white
-        
     }
     //Searchbar Target
     @objc func searchBtnPressed() {
@@ -125,10 +134,46 @@ class ExploreVC: UIViewController {
     }
 }
 
+
+
 extension ExploreVC: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         navigationItem.searchController?.searchBar.resignFirstResponder()
     }
+}
+
+typealias CollectionDelegates =  UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout
+extension ExploreVC: CollectionDelegates {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        200
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExploreCell.identifier, for: indexPath) as! ExploreCell
+        cell.configure(image: UIImage(named: "ExploreImage")!, title: "Hello Tashkent Hello Samarqand Samarqand Samarqand")
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width - 64, height: 80)
+    }
+ 
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        let inset = UIEdgeInsets(top: 0,
+                                 left: 32,
+                                 bottom: 0,
+                                 right: 32)
+        return inset
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 24
+    }
+    
+    
+    
     
 }

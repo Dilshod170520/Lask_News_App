@@ -48,8 +48,6 @@ class LargeNewsColViewCell: UICollectionViewCell {
         contentView.addSubview(titleLbl)
         contentView.addSubview(categoryLbl)
         contentView.addSubview(bannerImgView)
-
-        
         // image view
         bannerImgView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -72,5 +70,4 @@ class LargeNewsColViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

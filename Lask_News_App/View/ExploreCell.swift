@@ -10,40 +10,49 @@ import UIKit
 class ExploreCell: UICollectionViewCell {
     
     static let  identifier: String = "ExploreCell"
-    
-    let titleLabel: UILabel  = {
-        let l = UILabel()
-        l.text = "Experience the Serenity of Japan's Traditional Countryside"
-        l.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        l.textAlignment = .center
-        l.numberOfLines = 2
-   return l
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
-    let newsImage: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "ExploreImage")
-        image.contentMode = .scaleAspectFill
-        image.image = UIImage(named: "ExploreImage")
-        image.frame = CGRect(x: 0, y: 0, width: 80, height: 112)
-        return image
-        
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.numberOfLines = 2
+        return label
     }()
-
+    
+    // Override init and setup UI elements using SnapKit
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(newsImage)
-        newsImage.snp.makeConstraints { make in
-            make.top.right.bottom.equalToSuperview().inset(5)
-        }
+        
+        contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
+        
+        imageView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(80) // Set your desired image size
+            make.height.equalTo(112)
+        }
+        
         titleLabel.snp.makeConstraints { make in
-            make.left.top.bottom.equalToSuperview().inset(5)
-            make.right.equalTo(newsImage.snp.left)
+            make.trailing.equalTo(imageView.snp.leading).offset(16)
+            make.leading.equalToSuperview().inset(10)
+            make.centerY.equalToSuperview()
         }
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // Configure the cell's content
+    func configure(image: UIImage, title: String) {
+        imageView.image = image
+        titleLabel.text = title
+    }
 }
+

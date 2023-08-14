@@ -13,7 +13,6 @@ class HomeVC: UIViewController {
     var colView: UICollectionView = {
        // bu yerda collection umumiy nastroykalari
         let col = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
         col.isScrollEnabled = true
         
         // register cells
@@ -176,30 +175,23 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         4
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         11
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        switch indexPath.section {
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+         switch indexPath.section {
         case 0, 1:
             let cell = colView.dequeueReusableCell(withReuseIdentifier: "large", for: indexPath) as! LargeNewsColViewCell
             return cell
         default:
             let cell = colView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ExploreCell
-            
             return cell
         }
     }
-    
     // did select - > To Next VC : More info
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ArticleViewController()
         vc.modalPresentationStyle = .fullScreen
-        
         self.present(vc, animated: true)
     }
 }
