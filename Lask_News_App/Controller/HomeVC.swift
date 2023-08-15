@@ -9,9 +9,10 @@ import UIKit
 import SnapKit
 
 class HomeVC: UIViewController {
-
+    
+    
     var colView: UICollectionView = {
-       // bu yerda collection umumiy nastroykalari
+        // bu yerda collection umumiy nastroykalari
         let col = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         col.isScrollEnabled = true
         
@@ -21,12 +22,44 @@ class HomeVC: UIViewController {
         return col
     }()
     
+    var apiService = ApiService()
+    
+    var topArticles: [Article] = []
+    var everyThingArticles: [Article] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupNavBar()
         setupSubviews()
         setupColView()
+        
+        apiService.getTopHeadlineNews { result in
+            
+            switch result {
+            case .success(let articles):
+                self.topArticles = articles
+                
+                DispatchQueue.main.async {
+                    self.colView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+         
+        apiService.getNews(page: 1) { result in
+            switch result {
+            case .success(let articles):
+                self.everyThingArticles = articles
+                
+                DispatchQueue.main.async {
+                    self.colView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     //MARK: - Setup Functions
@@ -43,15 +76,18 @@ class HomeVC: UIViewController {
     func setupNavBar() {
         navigationItem.title = "Wednesday, November 29"
         
+        
+        
+        //let barItem = UIBarButtonItem(customView: <#T##UIView#>)
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.systemGray2
-        ]        
+        ]
         appearance.titlePositionAdjustment = UIOffset(horizontal: -100,
                                                       vertical: 0)
         
         navigationController?.navigationBar.standardAppearance = appearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        //        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     func setupColView() {
@@ -78,7 +114,7 @@ class HomeVC: UIViewController {
                 return createSmallSizeSection()
             }
         }
-                
+        
         return layout
     }
     
@@ -109,7 +145,7 @@ class HomeVC: UIViewController {
             leading: 10,
             bottom: 10,
             trailing: 10) // Set your desired insets
-
+        
         return section
     }
     func createNormalSizeSection() -> NSCollectionLayoutSection {
@@ -132,7 +168,7 @@ class HomeVC: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10) // Set your desired insets
-
+        
         return section
     }
     func createSmallSizeSection() -> NSCollectionLayoutSection {
@@ -168,12 +204,65 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         4
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        11
+        
+        switch section {
+        case 0:
+            return topArticles.count
+        case 1:
+            return everyThingArticles.count
+        default:
+            return 11
+        }
     }
-     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         switch indexPath.section {
-        case 0, 1:
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.section {
+        case 0:
             let cell = colView.dequeueReusableCell(withReuseIdentifier: "large", for: indexPath) as! LargeNewsColViewCell
+            
+            cell.titleLbl.text = topArticles[indexPath.row].title
+            cell.categoryLbl.text = topArticles[indexPath.row].author
+            
+            
+            // url to Image -> Data -> Image
+            
+            // url checking
+            // URL String = articles[indexPath.row].urlToImage
+    
+            
+            // string -> URL
+            if let url = URL(string: topArticles[indexPath.row].urlToImage!) {
+                
+                // url -> Data
+                if let data = try? Data(contentsOf: url) {
+                    
+                    // data -> Image
+                    cell.bannerImgView.image = UIImage(data: data)
+                }
+            }
+            return cell
+        case 1:
+            let cell = colView.dequeueReusableCell(withReuseIdentifier: "large", for: indexPath) as! LargeNewsColViewCell
+            
+            cell.titleLbl.text = everyThingArticles[indexPath.row].title
+            cell.categoryLbl.text = everyThingArticles[indexPath.row].author
+            
+            
+            // url to Image -> Data -> Image
+            
+            // url checking
+            // URL String = articles[indexPath.row].urlToImage
+    
+            
+            // string -> URL
+            if let url = URL(string: everyThingArticles[indexPath.row].urlToImage!) {
+                
+                // url -> Data
+                if let data = try? Data(contentsOf: url) {
+                    
+                    // data -> Image
+                    cell.bannerImgView.image = UIImage(data: data)
+                }
+            }
             return cell
         default:
             let cell = colView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ExploreCell

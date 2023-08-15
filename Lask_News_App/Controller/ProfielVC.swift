@@ -170,7 +170,7 @@ class ProfielVC: UIViewController {
     func setTableVeiw() {
         tableView.delegate = self
         tableView.dataSource = self
-        
+        tableView.alwaysBounceVertical = false
         view.addSubview( tableView)
         tableView.snp.makeConstraints { make in
             make.bottom.right.left.equalToSuperview()

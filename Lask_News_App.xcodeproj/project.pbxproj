@@ -31,6 +31,7 @@
 		526E17A72A87507500F9E865 /* LargeNewsColViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E179D2A87507500F9E865 /* LargeNewsColViewCell.swift */; };
 		526E17AF2A8769C300F9E865 /* UIView_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E17AE2A8769C300F9E865 /* UIView_Extensions.swift */; };
 		526E17B12A87A7CF00F9E865 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E17B02A87A7CF00F9E865 /* Storyboard.storyboard */; };
+		52A14B932A8B48AA00E47A7C /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A14B922A8B48AA00E47A7C /* ApiService.swift */; };
 		65AB67690FC2262307C28005 /* Pods_Lask_News_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFF6C0BFD27612FBA380CC0 /* Pods_Lask_News_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		526E179D2A87507500F9E865 /* LargeNewsColViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeNewsColViewCell.swift; sourceTree = "<group>"; };
 		526E17AE2A8769C300F9E865 /* UIView_Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView_Extensions.swift; sourceTree = "<group>"; };
 		526E17B02A87A7CF00F9E865 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		52A14B922A8B48AA00E47A7C /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		78A64522C908B3689435AC95 /* Pods-Lask_News_App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lask_News_App.release.xcconfig"; path = "Target Support Files/Pods-Lask_News_App/Pods-Lask_News_App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,10 +112,11 @@
 				526E17732A874F2700F9E865 /* AppDelegate.swift */,
 				526E17752A874F2700F9E865 /* SceneDelegate.swift */,
 				526E17B02A87A7CF00F9E865 /* Storyboard.storyboard */,
+				52A14B912A8B489000E47A7C /* Services */,
 				526E17AD2A8769C300F9E865 /* Extensions */,
-				526E17902A87507500F9E865 /* Controller */,
 				526E17992A87507500F9E865 /* Model */,
 				526E179A2A87507500F9E865 /* View */,
+				526E17902A87507500F9E865 /* Controller */,
 				526E177F2A874F2900F9E865 /* Assets.xcassets */,
 				526E17812A874F2900F9E865 /* LaunchScreen.storyboard */,
 				526E17842A874F2900F9E865 /* Info.plist */,
@@ -125,14 +128,14 @@
 		526E17902A87507500F9E865 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				526E17942A87507500F9E865 /* WelcomeViewController.swift */,
 				526E17912A87507500F9E865 /* TabBar.swift */,
+				526E17962A87507500F9E865 /* HomeVC.swift */,
 				526E17922A87507500F9E865 /* ProfielVC.swift */,
 				526E17932A87507500F9E865 /* ExploreVC.swift */,
-				526E17942A87507500F9E865 /* WelcomeViewController.swift */,
 				526E17952A87507500F9E865 /* ArticleViewController.swift */,
-				526E17962A87507500F9E865 /* HomeVC.swift */,
-				526E17982A87507500F9E865 /* BookmarVc.swift */,
 				5254E8DB2A89E6DC0066D9CD /* SearchViewController.swift */,
+				526E17982A87507500F9E865 /* BookmarVc.swift */,
 				5254E8E12A8A53E10066D9CD /* ClappedArticlsVC.swift */,
 				5254E8E72A8A9AED0066D9CD /* ReadArticlVC.swift */,
 			);
@@ -149,10 +152,10 @@
 		526E179A2A87507500F9E865 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5254E8E52A8A9AC00066D9CD /* ReadArticlCell.swift */,
-				526E179B2A87507500F9E865 /* ExploreCell.swift */,
 				526E179C2A87507500F9E865 /* NormalCollectionViewCell.swift */,
 				526E179D2A87507500F9E865 /* LargeNewsColViewCell.swift */,
+				5254E8E52A8A9AC00066D9CD /* ReadArticlCell.swift */,
+				526E179B2A87507500F9E865 /* ExploreCell.swift */,
 				5254E8DD2A89E7490066D9CD /* SearchCell.swift */,
 				5254E8DF2A89F7E20066D9CD /* BookmarkTableVeiwCell.swift */,
 				5254E8E32A8A89390066D9CD /* ClappedArticlsCell.swift */,
@@ -166,6 +169,14 @@
 				526E17AE2A8769C300F9E865 /* UIView_Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		52A14B912A8B489000E47A7C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				52A14B922A8B48AA00E47A7C /* ApiService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C41BFCE142E1CEA3A0C1CC9A /* Pods */ = {
@@ -296,6 +307,7 @@
 				5254E8E22A8A53E10066D9CD /* ClappedArticlsVC.swift in Sources */,
 				5254E8E62A8A9AC00066D9CD /* ReadArticlCell.swift in Sources */,
 				5254E8E42A8A89390066D9CD /* ClappedArticlsCell.swift in Sources */,
+				52A14B932A8B48AA00E47A7C /* ApiService.swift in Sources */,
 				5254E8E82A8A9AED0066D9CD /* ReadArticlVC.swift in Sources */,
 				5254E8DE2A89E7490066D9CD /* SearchCell.swift in Sources */,
 				526E17A52A87507500F9E865 /* ExploreCell.swift in Sources */,
