@@ -8,6 +8,7 @@
 import UIKit
 
 class ExploreVC: UIViewController {
+    
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.showsHorizontalScrollIndicator = false
@@ -17,7 +18,7 @@ class ExploreVC: UIViewController {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 80) // Set your desired cell 
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 80) // Set your desired cell
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ExploreCell.self, forCellWithReuseIdentifier: ExploreCell.identifier)
         collectionView.backgroundColor = .white
@@ -40,14 +41,46 @@ class ExploreVC: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    var  serchText = ""
+    
+    let apiService = ApiService()
+    var evrethingArticls : [Article] = [ ]
+    
+    
     //MARK: -  ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
         
-        
+        searchController.searchBar.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        apiService.getNews(searchText: serchText) { result in
+            switch result {
+            case .success(let success):
+                self.evrethingArticls = success
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+        
+//        apiService.getNews(page: 3, pageSize: 40) { result in
+//
+//            switch result {
+//            case .success(let articls):
+//                self.evrethingArticls = articls
+//                DispatchQueue.main.async {
+//                    self.collectionView.reloadData()
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+        
     }
     
     //MARK: - Setup Functions
@@ -123,10 +156,9 @@ class ExploreVC: UIViewController {
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.placeholder = "Search artists"
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.delegate = self
-        
+       
+
         navigationItem.searchController = searchController
-        
         searchController.searchBar.becomeFirstResponder()
     }
 }
@@ -143,20 +175,28 @@ extension ExploreVC: UISearchBarDelegate {
 typealias CollectionDelegates =  UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout
 extension ExploreVC: CollectionDelegates {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        200
+        return evrethingArticls.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExploreCell.identifier, for: indexPath) as! ExploreCell
         cell.configure(image: UIImage(named: "ExploreImage")!, title: "Hello Tashkent Hello Samarqand Samarqand Samarqand")
+        
+        var image = Data()
+        if let url = URL(string: evrethingArticls[indexPath.row].urlToImage!) {
+            if let data = try? Data(contentsOf: url) {
+                image = data
+            }
+        }
+        cell.configure(image: UIImage(data: image)!,
+                       title: evrethingArticls[indexPath.row].title!)
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         return CGSize(width: view.frame.width - 64, height: 80)
     }
-    
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
         let inset = UIEdgeInsets(top: 20,
@@ -168,9 +208,24 @@ extension ExploreVC: CollectionDelegates {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 30    }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 50
     }
     
+}
+extension ExploreVC: UISearchControllerDelegate  {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        serchText =  searchBar.text!
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        serchText =  searchBar.text!
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+            if let searchText = searchController.searchBar.text {
+               serchText = searchText
+            }
+        }
 }

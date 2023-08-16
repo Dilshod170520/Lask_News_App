@@ -12,7 +12,7 @@ class LargeNewsColViewCell: UICollectionViewCell {
  
     var bannerImgView: UIImageView = {
         let imgView = UIImageView()
-        imgView.contentMode = .scaleToFill
+        imgView.contentMode = .scaleAspectFill
         imgView.layer.cornerRadius = 16
         imgView.clipsToBounds = true
         return imgView
@@ -20,8 +20,8 @@ class LargeNewsColViewCell: UICollectionViewCell {
     
     var titleLbl: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 28, weight: .semibold)
-        lbl.textColor = UIColor.black
+        lbl.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        lbl.textColor = .label
         lbl.numberOfLines = 2
         lbl.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         lbl.adjustsFontSizeToFitWidth = true
@@ -33,13 +33,10 @@ class LargeNewsColViewCell: UICollectionViewCell {
     var categoryLbl: UILabel = {
         
         let lbl = UILabel()
-        
         lbl.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         lbl.textColor = UIColor.systemBlue
         lbl.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        
 //        lbl.lineBreakMode = .byTruncatingTail
-        
         return lbl
     }()
     

@@ -15,12 +15,29 @@ class BookmarVc: UIViewController {
         return table
     }()
     
+    
+    let apiService = ApiService()
+    var everyThingArticls: [Article] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         setupNuvbar()
         setupTableVeiw()
+        
+        
+        apiService.getNews(page: 4) { result in
+            switch result {
+            case .success(let articls):
+                self.everyThingArticls = articls
+                DispatchQueue.main.async {
+                    self.tableVeiw.reloadData()
+                }
+            case .failure(let failure):
+                print(failure)
+            }
+        }
     }
     
     func setupTableVeiw() {
@@ -59,16 +76,20 @@ class BookmarVc: UIViewController {
 typealias TableVeiwDelegetes =  UITableViewDelegate & UITableViewDataSource
 extension BookmarVc: TableVeiwDelegetes{
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        30
+        return everyThingArticls.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:  BookmarkTableVeiwCell.identifier)as! BookmarkTableVeiwCell
         cell.configure(title: "I am gonna be iOS Developer in the future Inshaallah", image: UIImage(named: "image"))
-                
+         var dataImage = Data()
+        if let url = URL(string:  everyThingArticls[indexPath.row].urlToImage!) {
+            if let data = try? Data(contentsOf: url) {
+               dataImage = data
+            }
+        }
+        cell.configure(title: everyThingArticls[indexPath.row].title!, image: UIImage(data: dataImage))
         return cell
     }
     

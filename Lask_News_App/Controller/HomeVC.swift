@@ -10,7 +10,6 @@ import SnapKit
 
 class HomeVC: UIViewController {
     
-    
     var colView: UICollectionView = {
         // bu yerda collection umumiy nastroykalari
         let col = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -21,20 +20,19 @@ class HomeVC: UIViewController {
         col.register(LargeNewsColViewCell.self, forCellWithReuseIdentifier: "large")
         return col
     }()
-    
     var apiService = ApiService()
-    
     var topArticles: [Article] = []
     var everyThingArticles: [Article] = []
+ //   var fetchedData: [FetchedData] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .tertiarySystemBackground
         setupNavBar()
         setupSubviews()
         setupColView()
-        
-        apiService.getTopHeadlineNews { result in
+    apiService.getTopHeadlineNews { result in
+            
             
             switch result {
             case .success(let articles):
@@ -47,7 +45,6 @@ class HomeVC: UIViewController {
                 print(error)
             }
         }
-         
         apiService.getNews(page: 1) { result in
             switch result {
             case .success(let articles):
@@ -75,9 +72,6 @@ class HomeVC: UIViewController {
     
     func setupNavBar() {
         navigationItem.title = "Wednesday, November 29"
-        
-        
-        
         //let barItem = UIBarButtonItem(customView: <#T##UIView#>)
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [
@@ -85,7 +79,6 @@ class HomeVC: UIViewController {
         ]
         appearance.titlePositionAdjustment = UIOffset(horizontal: -100,
                                                       vertical: 0)
-        
         navigationController?.navigationBar.standardAppearance = appearance
         //        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
@@ -98,7 +91,6 @@ class HomeVC: UIViewController {
     }
     
     //MARK: - Col View Layout Functions
-    
     func createLayout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewCompositionalLayout { [self] section, environment in
@@ -114,7 +106,6 @@ class HomeVC: UIViewController {
                 return createSmallSizeSection()
             }
         }
-        
         return layout
     }
     
@@ -139,7 +130,6 @@ class HomeVC: UIViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 10,
             leading: 10,
@@ -164,9 +154,7 @@ class HomeVC: UIViewController {
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .fractionalWidth(0.6)),
             subitems: [item,item])
-        
         let section = NSCollectionLayoutSection(group: group)
-        
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10) // Set your desired insets
         
         return section
@@ -191,7 +179,6 @@ class HomeVC: UIViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10) // Set your desired insets
         return section
     }
@@ -201,10 +188,9 @@ class HomeVC: UIViewController {
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        4
+        2
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         switch section {
         case 0:
             return topArticles.count
@@ -221,20 +207,14 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             cell.titleLbl.text = topArticles[indexPath.row].title
             cell.categoryLbl.text = topArticles[indexPath.row].author
-            
-            
             // url to Image -> Data -> Image
-            
             // url checking
             // URL String = articles[indexPath.row].urlToImage
-    
-            
             // string -> URL
             if let url = URL(string: topArticles[indexPath.row].urlToImage!) {
                 
                 // url -> Data
                 if let data = try? Data(contentsOf: url) {
-                    
                     // data -> Image
                     cell.bannerImgView.image = UIImage(data: data)
                 }
@@ -245,20 +225,15 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             cell.titleLbl.text = everyThingArticles[indexPath.row].title
             cell.categoryLbl.text = everyThingArticles[indexPath.row].author
-            
-            
             // url to Image -> Data -> Image
-            
             // url checking
             // URL String = articles[indexPath.row].urlToImage
-    
-            
             // string -> URL
             if let url = URL(string: everyThingArticles[indexPath.row].urlToImage!) {
                 
+                
                 // url -> Data
                 if let data = try? Data(contentsOf: url) {
-                    
                     // data -> Image
                     cell.bannerImgView.image = UIImage(data: data)
                 }
@@ -273,6 +248,26 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ArticleViewController()
         vc.modalPresentationStyle = .fullScreen
+        switch indexPath.section {
+        case 0:
+            if  let url = URL(string: topArticles[indexPath.row].urlToImage!) {
+                if let data = try? Data(contentsOf: url) {
+                    vc.backgroundImageview.image = UIImage(data: data)
+                }
+            }
+            vc.dataLabal.text = topArticles[indexPath.row].author
+            vc.titlLabel.text = topArticles[indexPath.row].title
+            vc.descreptionLabel.text = topArticles[indexPath.row].description
+        default:
+            if  let url = URL(string: everyThingArticles[indexPath.row].urlToImage!) {
+                if let data = try? Data(contentsOf: url) {
+                    vc.backgroundImageview.image = UIImage(data: data)
+                }
+            }
+            vc.dataLabal.text = everyThingArticles[indexPath.row].author
+            vc.titlLabel.text = everyThingArticles[indexPath.row].title
+            vc.descreptionLabel.text = everyThingArticles[indexPath.row].description
+        }
         self.present(vc, animated: true)
     }
 }

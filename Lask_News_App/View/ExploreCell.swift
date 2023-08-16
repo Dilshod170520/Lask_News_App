@@ -12,13 +12,15 @@ class ExploreCell: UICollectionViewCell {
     static let  identifier: String = "ExploreCell"
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 15
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .tertiarySystemBackground
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         label.textAlignment = .left
         label.numberOfLines = 2

@@ -14,7 +14,7 @@ class BookmarkTableVeiwCell: UITableViewCell {
         // Create the label and image view
         private let titleLabel: UILabel = {
             let label = UILabel()
-            label.textColor = .black
+            label.textColor = .tertiarySystemBackground
             label.numberOfLines = 2
             label.font  = UIFont.systemFont(ofSize: 20, weight: .semibold)
             return label
@@ -31,7 +31,7 @@ class BookmarkTableVeiwCell: UITableViewCell {
     
     private let contanerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .label
         return view
     }()
     

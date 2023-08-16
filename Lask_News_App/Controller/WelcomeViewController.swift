@@ -24,7 +24,7 @@ class WelcomeViewController: UIViewController {
     
     let contenerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .tertiarySystemBackground
         view.layer.cornerRadius = 40
         return view
     }()
@@ -32,7 +32,7 @@ class WelcomeViewController: UIViewController {
     let titleLabel: UILabel = {
         let l = UILabel()
         l.text = "Get The Latest News And Updates"
-        l.textColor = .black
+        l.textColor = .label
         l.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
         l.textAlignment = .center
         l.numberOfLines = 2
@@ -42,7 +42,7 @@ class WelcomeViewController: UIViewController {
     let subTitleLabel: UILabel = {
         let l = UILabel()
         l.text = "From Politics to Entertainment: Your One-Stop Source for Comprehensive Coverage of the Latest News and Developments Across the Glob will be right on your hand."
-        l.textColor = .gray
+        l.textColor = UIColor(named: "grayColor")
         l.font = UIFont.systemFont(ofSize: 18)
         l.textAlignment = .center
         l.numberOfLines = 0
