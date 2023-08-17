@@ -20,7 +20,7 @@ class SearchCell: UICollectionViewCell {
    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = " "
-        label.textColor = .tertiarySystemBackground
+        label.textColor = .label
         label.textAlignment = .left
         label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)

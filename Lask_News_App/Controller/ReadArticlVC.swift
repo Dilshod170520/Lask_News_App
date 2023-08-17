@@ -14,7 +14,7 @@ class ReadArticlVC: UIViewController {
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 64, height: 80)
         let collecton = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
+        collecton.backgroundColor = .tertiarySystemBackground
         collecton.register(ReadArticlCell.self, forCellWithReuseIdentifier: ReadArticlCell.identifier)
         return collecton
     }()
@@ -22,7 +22,6 @@ class ReadArticlVC: UIViewController {
         super.viewDidLoad()
         setColDelegates()
         setNavBar()
-        view.backgroundColor = .blue
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -49,12 +48,9 @@ class ReadArticlVC: UIViewController {
     
 }
 extension ReadArticlVC: UICollectionViewDataSource, UICollectionViewDelegate,  UICollectionViewDelegateFlowLayout{
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         20
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReadArticlCell.identifier, for: indexPath) as! ReadArticlCell
         cell.configur(imege: UIImage(named: "flower"), title: "I love my town. Because that is so wandurfull")

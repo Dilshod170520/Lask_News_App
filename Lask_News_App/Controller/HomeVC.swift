@@ -20,10 +20,20 @@ class HomeVC: UIViewController {
         col.register(LargeNewsColViewCell.self, forCellWithReuseIdentifier: "large")
         return col
     }()
+    let stack: UIStackView = {
+        let st = UIStackView()
+        st.axis = .vertical
+        st.spacing = 10
+        st.alignment = .fill
+        st.distribution = .fillEqually
+        return st
+    }()
+    
     var apiService = ApiService()
+    
     var topArticles: [Article] = []
     var everyThingArticles: [Article] = []
- //   var fetchedData: [FetchedData] = []
+    //   var fetchedData: [FetchedData] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +41,11 @@ class HomeVC: UIViewController {
         setupNavBar()
         setupSubviews()
         setupColView()
-    apiService.getTopHeadlineNews { result in
-            
-            
+        
+        apiService.getTopHeadlineNews { result in
             switch result {
             case .success(let articles):
                 self.topArticles = articles
-                
                 DispatchQueue.main.async {
                     self.colView.reloadData()
                 }
@@ -71,8 +79,34 @@ class HomeVC: UIViewController {
     }
     
     func setupNavBar() {
-        navigationItem.title = "Wednesday, November 29"
-        //let barItem = UIBarButtonItem(customView: <#T##UIView#>)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, MMM d, yyyy"
+        
+        let currentDate = Date()
+        let dateString = dateFormatter.string(from: currentDate)
+        
+        navigationItem.title = "Good morng  turn " + dateString
+        
+        let morning: UILabel = {
+            let l = UILabel()
+            l.text = "Good  Morning"
+            l.textColor = .label
+            return l
+        }()
+        let dateLabel: UILabel = {
+            let l = UILabel()
+            l.text = dateString
+            l.textColor = .label
+            return l
+        }()
+        
+        [morning, dateLabel].forEach { labels in
+            stack.addArrangedSubview(labels)
+        }
+        navigationItem.titleView = stack
+        
+        
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.systemGray2
@@ -82,19 +116,15 @@ class HomeVC: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         //        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
-    
     func setupColView() {
         colView.delegate = self
         colView.dataSource = self
-        
         colView.setCollectionViewLayout(createLayout(), animated: true)
     }
     
     //MARK: - Col View Layout Functions
     func createLayout() -> UICollectionViewLayout {
-        
         let layout = UICollectionViewCompositionalLayout { [self] section, environment in
-            
             switch section {
             case 0:
                 return createBigSizeSection()
@@ -110,7 +140,6 @@ class HomeVC: UIViewController {
     }
     
     func createBigSizeSection() -> NSCollectionLayoutSection {
-        
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
@@ -121,7 +150,6 @@ class HomeVC: UIViewController {
             leading: 5,
             bottom: 5,
             trailing: 5)
-        
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(0.95),
@@ -156,7 +184,6 @@ class HomeVC: UIViewController {
             subitems: [item,item])
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10) // Set your desired insets
-        
         return section
     }
     func createSmallSizeSection() -> NSCollectionLayoutSection {
@@ -176,7 +203,6 @@ class HomeVC: UIViewController {
                 widthDimension: .fractionalWidth(0.5),
                 heightDimension: .fractionalWidth(0.5)),
             subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10) // Set your desired insets

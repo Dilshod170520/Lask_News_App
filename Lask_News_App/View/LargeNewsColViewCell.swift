@@ -60,8 +60,6 @@ class LargeNewsColViewCell: UICollectionViewCell {
             make.bottom.left.right.equalToSuperview()
             make.top.equalTo(categoryLbl.snp.bottom).offset(8)
         }
-        titleLbl.text = "Bugun sana 10.08. Havo harorati odatiy issiq"
-        categoryLbl.text = "Figma"
         bannerImgView.image = UIImage(named: "image")
     }
     required init?(coder: NSCoder) {

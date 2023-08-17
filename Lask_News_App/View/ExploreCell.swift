@@ -20,7 +20,7 @@ class ExploreCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .tertiarySystemBackground
+        label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         label.textAlignment = .left
         label.numberOfLines = 2

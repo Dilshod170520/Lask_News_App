@@ -14,6 +14,8 @@ class ClappedArticlsVC: UIViewController {
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 80)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.backgroundColor = .tertiarySystemBackground
+        
         collection.register(ClappedArticlsCell.self, forCellWithReuseIdentifier: ClappedArticlsCell.identifier)
         
         

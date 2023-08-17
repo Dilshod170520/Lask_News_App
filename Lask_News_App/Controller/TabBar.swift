@@ -12,7 +12,7 @@ class TabBar: BubbleTabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tabBar.backgroundColor = .tertiarySystemBackground
         viewControllers = [
             generateVC(vc: HomeVC(),
                        title: "Home",
@@ -28,7 +28,7 @@ class TabBar: BubbleTabBarController {
             
             
 
-            generateVC(vc: ProfielVC(),
+            generateVC(vc: ProfileVC(),
                        title: "Profile",
                        systemImageName: "person"),
         
@@ -41,10 +41,8 @@ class TabBar: BubbleTabBarController {
     func generateVC(vc: UIViewController, title: String, systemImageName: String) -> UIViewController {
         
         let nav = UINavigationController(rootViewController: vc)
-        
         nav.tabBarItem.title = title
         nav.tabBarItem.image = UIImage(systemName: systemImageName)
-        
         return nav
     }
 

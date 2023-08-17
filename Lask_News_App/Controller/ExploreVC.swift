@@ -21,7 +21,7 @@ class ExploreVC: UIViewController {
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 80) // Set your desired cell
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ExploreCell.self, forCellWithReuseIdentifier: ExploreCell.identifier)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .tertiarySystemBackground
         return collectionView
     }()
     
@@ -123,7 +123,7 @@ class ExploreVC: UIViewController {
             make.top.equalTo(scrollView.snp.bottom)
         }
         
-        view.backgroundColor = .white
+        view.backgroundColor = .tertiarySystemBackground
         setNavBar()
     }
     func setNavBar() {

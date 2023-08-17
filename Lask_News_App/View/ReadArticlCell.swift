@@ -21,7 +21,7 @@ class ReadArticlCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .tertiarySystemBackground
+        label.textColor = .label
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         label.numberOfLines = 2

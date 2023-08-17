@@ -4,12 +4,12 @@
 //
 //  Created by MacBook Pro on 10/08/23.
 //
-
 import UIKit
 
-class ProfielVC: UIViewController {
+class ProfileVC: UIViewController {
     
-    var sectionNameArray = [ "Clapped Articls", "Read Articls", "My Account", "Privasy Setting", "Ofline Reading", "About Us"]
+    var sectionNameArray = [ "Clapped Articls","Read Articls"]
+    var sectionNameArray2 = [ "My Account", "Privasy Setting", "Ofline Reading", "About Us"]
     
     private let avatarImage: UIImageView = {
         let img = UIImageView()
@@ -22,16 +22,15 @@ class ProfielVC: UIViewController {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = " King Fisher bird"
-        label.textColor = .black
+        label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 25, weight:  .semibold)
         label.numberOfLines = 2
         return label
     }()
-    
     //  line UIview
     private let lineUIview: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = UIColor(named: "grayColor")
         return view
     }()
     
@@ -95,7 +94,7 @@ class ProfielVC: UIViewController {
     private let articleRead: UILabel = {
         let l = UILabel()
         l.text = "Article Read"
-        l.textColor = .darkGray
+        l.textColor = UIColor(named: "darkGray")
         l.font = UIFont.systemFont(ofSize: 15, weight: .light)
         l.textAlignment = .center
         return l
@@ -104,7 +103,7 @@ class ProfielVC: UIViewController {
     private let streakLabel: UILabel = {
         let l = UILabel()
         l.text = "Streak"
-        l.textColor = .darkGray
+        l.textColor = UIColor(named: "darkGray")
         l.font = UIFont.systemFont(ofSize: 15, weight: .light)
         l.textAlignment = .center
         return l
@@ -113,20 +112,17 @@ class ProfielVC: UIViewController {
     private let lavelLabel: UILabel = {
         let l = UILabel()
         l.text = "Level"
-        l.textColor = .darkGray
+        l.textColor = UIColor(named: "darkGray")
         l.font = UIFont.systemFont(ofSize: 15, weight: .light)
         l.textAlignment = .center
         return l
     }()
     
-    
-    
     //MARK: - Collection score Labels of information about the user
-    
     private let articleCountLable: UILabel = {
         let l = UILabel()
         l.text = "304"
-        l.textColor = .black
+        l.textColor = .label
         l.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         l.textAlignment = .center
         return l
@@ -135,7 +131,7 @@ class ProfielVC: UIViewController {
     private let streakCountLabel: UILabel = {
         let l = UILabel()
         l.text = "345 Read"
-        l.textColor = .black
+        l.textColor = .label
         l.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         l.textAlignment = .center
         return l
@@ -143,13 +139,11 @@ class ProfielVC: UIViewController {
     private let lavelCountLabel: UILabel = {
         let l = UILabel()
         l.text = "455"
-        l.textColor = .black
+        l.textColor = .label
         l.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         l.textAlignment = .center
         return l
     }()
-    
-    
     let tableView: UITableView = {
         let t = UITableView()
         return t
@@ -159,13 +153,9 @@ class ProfielVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
         setLabelstoStack()
         setTableVeiw()
     }
-    
-    
     
     func setTableVeiw() {
         tableView.delegate = self
@@ -179,31 +169,26 @@ class ProfielVC: UIViewController {
     }
     
     func setLabelstoStack() {
-        view.backgroundColor = .white
+        view.backgroundColor = .tertiarySystemBackground
         //aricle
         view.addSubview(mainContenerStack)
         
         mainContenerStack.snp.makeConstraints { make in
             make.left.right.equalTo(view.safeAreaLayoutGuide).inset(24)
             make.top.equalTo(view.safeAreaLayoutGuide)
-            
             [ articleRead, articleCountLable].forEach { items in
                 articleReadStack.addArrangedSubview(items)
             }
-            
             [ streakLabel, streakCountLabel].forEach { items in
                 streakStack.addArrangedSubview(items)
             }
-            
             [ lavelLabel, lavelCountLabel].forEach { items in
                 lavelStack.addArrangedSubview(items)
             }
             
-            
             [articleReadStack, streakStack, lavelStack].forEach { stacks in
                 groupStack.addArrangedSubview(stacks)
             }
-            
             
             [avatarImage, nameLabel].forEach { item in
                 avatarContenerStack.addArrangedSubview(item)
@@ -215,7 +200,6 @@ class ProfielVC: UIViewController {
             [ avatarContenerStack, groupStack, lineUIview].forEach { groupStack in
                 mainContenerStack.addArrangedSubview(groupStack)
             }
-            
             lineUIview.snp.makeConstraints { make in
                 make.height.equalTo(1)
                 make.width.equalTo(view.frame.width - 30)
@@ -224,11 +208,7 @@ class ProfielVC: UIViewController {
     }
 }
 
-extension ProfielVC: UITableViewDataSource , UITableViewDelegate {
-    
-    
-   
-    
+extension ProfileVC: UITableViewDataSource , UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
      2
@@ -242,7 +222,11 @@ extension ProfielVC: UITableViewDataSource , UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.textLabel?.text = sectionNameArray[indexPath.row]
+        if indexPath.section == 0 {
+            cell.textLabel?.text = sectionNameArray[indexPath.row]
+        } else {
+            cell.textLabel?.text = sectionNameArray2[indexPath.row]
+        }
         cell.accessoryType = .disclosureIndicator
         return cell
     }

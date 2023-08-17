@@ -30,7 +30,7 @@ class ArticleViewController: UIViewController {
         let effect = UIBlurEffect(style: .regular)
         let blurView = UIVisualEffectView(effect: effect)
         
-        blurView.contentView.backgroundColor = .systemOrange.withAlphaComponent(0.2)
+        blurView.contentView.backgroundColor = UIColor(named: "articlBarColor")!.withAlphaComponent(0.3)
         blurView.alpha = 0.9
         
         view.addSubview(blurView)

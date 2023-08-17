@@ -8,11 +8,12 @@
 import Foundation
 
 class ApiService {
-    
     private let apiKey = "bf8cddfa13464e21937c9a90b02725ec"
     
     init() {
+        
     }
+    
     // malumot ob kelish - Api Get Data
     func getTopHeadlineNews(completionHandler: @escaping (Result<[Article], ApiError>) -> ())  {
         // api Url
@@ -21,12 +22,11 @@ class ApiService {
         let language = "uz"
         // finish url
         let urlString = baseUrl + "sources=bbc-news" + "&apiKey=" + apiKey
-        
-        
         guard let url = URL(string: urlString) else {
             completionHandler(.failure(ApiError.invalidUrl))
             return
         }
+        
 //        let request = URLRequest(url: url)
 //        let session = URLSession(configuration: .default)
 //        let task = session.dataTask(with: request) { data, response, error in
@@ -39,6 +39,7 @@ class ApiService {
 //            guard let response = response as? HTTPURLResponse else {
 //                return
 //            }
+            
             // handling error
             // handling data
             guard let data = data, error == nil else {
@@ -59,16 +60,13 @@ class ApiService {
                 print(error)
             }
         }
-        
         task.resume()
     }
     
     
     func getNews(page: Int, pageSize: Int = 20, completion: @escaping (Result<[Article], Error>) -> ()) {
-        
         // URL
-        
-        let urlString = "https://newsapi.org/v2/everything?q=bitcoin&apiKey=bf8cddfa13464e21937c9a90b02725ec&pageSize=10&page=2"
+        let urlString = "https://newsapi.org/v2/everything?q=bitcoin&apiKey=bf8cddfa13464e21937c9a90b02725ec&pageSize=10&page=3"
         guard let url = URL(string: urlString) else {
             completion(.failure(ApiError.invalidUrl))
             return
@@ -92,7 +90,6 @@ class ApiService {
                 completion(.failure(error))
             }
         }
-        
         // Task.resume()
         task.resume()
     }

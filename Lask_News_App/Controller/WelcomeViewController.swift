@@ -53,7 +53,7 @@ class WelcomeViewController: UIViewController {
         let b = UIButton()
         b.setTitle("Explore ➜", for: .normal)
         b.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        b.tintColor = .white
+        b.tintColor = .label
         b.backgroundColor =  UIColor(named: "exploreBtnColer")
         b.layer.cornerRadius = 25
         return b
