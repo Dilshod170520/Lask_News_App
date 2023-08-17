@@ -106,7 +106,6 @@ class HomeVC: UIViewController {
         }
         navigationItem.titleView = stack
         
-        
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.systemGray2
@@ -138,13 +137,11 @@ class HomeVC: UIViewController {
         }
         return layout
     }
-    
     func createBigSizeSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .fractionalHeight(1)))
-        
         item.contentInsets = NSDirectionalEdgeInsets(
             top: 5,
             leading: 5,
@@ -155,7 +152,6 @@ class HomeVC: UIViewController {
                 widthDimension: .fractionalWidth(0.95),
                 heightDimension: .fractionalHeight(0.5)),
             subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(
@@ -163,7 +159,6 @@ class HomeVC: UIViewController {
             leading: 10,
             bottom: 10,
             trailing: 10) // Set your desired insets
-        
         return section
     }
     func createNormalSizeSection() -> NSCollectionLayoutSection {
@@ -223,7 +218,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case 1:
             return everyThingArticles.count
         default:
-            return 11
+         return 11
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -256,9 +251,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             // URL String = articles[indexPath.row].urlToImage
             // string -> URL
             if let url = URL(string: everyThingArticles[indexPath.row].urlToImage!) {
-                
-                
-                // url -> Data
+            // url -> Data
                 if let data = try? Data(contentsOf: url) {
                     // data -> Image
                     cell.bannerImgView.image = UIImage(data: data)

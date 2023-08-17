@@ -26,7 +26,8 @@ class ExploreVC: UIViewController {
     }()
     
     // Array for Category Title
-    var categoryNames: [String] = ["Technology", "Politics", "Sport", "World", "Science", "Weather"]
+    var categoryNames: [String] = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
+    
     let stack: UIStackView = {
         let stack  = UIStackView()
         stack.axis = .horizontal
@@ -41,7 +42,8 @@ class ExploreVC: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var  serchText = ""
+    var searchText: String? = nil
+    var selectedCategory: Category? = nil
     
     let apiService = ApiService()
     var evrethingArticls : [Article] = [ ]
@@ -56,30 +58,30 @@ class ExploreVC: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        apiService.getNews(searchText: serchText) { result in
+        //        apiService.getNews(searchText: serchText) { result in
+        //            switch result {
+        //            case .success(let success):
+        //                self.evrethingArticls = success
+        //                DispatchQueue.main.async {
+        //                    self.collectionView.reloadData()
+        //                }
+        //            case .failure(let failure):
+        //                print(failure)
+        //            }
+        //        }
+        
+        apiService.getNews(page: 3, pageSize: 40) { result in
+            
             switch result {
-            case .success(let success):
-                self.evrethingArticls = success
+            case .success(let articls):
+                self.evrethingArticls = articls
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-            case .failure(let failure):
-                print(failure)
+            case .failure(let error):
+                print(error)
             }
         }
-        
-//        apiService.getNews(page: 3, pageSize: 40) { result in
-//
-//            switch result {
-//            case .success(let articls):
-//                self.evrethingArticls = articls
-//                DispatchQueue.main.async {
-//                    self.collectionView.reloadData()
-//                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
         
     }
     
@@ -93,7 +95,7 @@ class ExploreVC: UIViewController {
                              for: .touchUpInside)
             button.configuration = .filled()
             button.configuration?.baseBackgroundColor = .systemGray6
-            button.configuration?.title = category
+            button.configuration?.title = category.capitalized
             button.configuration?.cornerStyle = .capsule
             button.tag = categoryNames.firstIndex(of: category)!
             
@@ -126,6 +128,7 @@ class ExploreVC: UIViewController {
         view.backgroundColor = .tertiarySystemBackground
         setNavBar()
     }
+    
     func setNavBar() {
         navigationItem.title = "Explore"
         let appearance = UINavigationBarAppearance()
@@ -147,8 +150,29 @@ class ExploreVC: UIViewController {
     //MARK: - @objc functions
     // Category Target func
     @objc func categoryBtnPressed(_ sender: UIButton) {
-        categoryButtons[sender.tag].configuration?.baseBackgroundColor = .systemBlue
-        categoryButtons[sender.tag].configuration?.baseForegroundColor = .white
+        
+        categoryButtons.forEach { button in
+            button.configuration?.baseForegroundColor = .white
+            button.configuration?.baseBackgroundColor = .systemGray6
+        }
+        
+        sender.configuration?.baseBackgroundColor = .systemBlue
+        sender.configuration?.baseForegroundColor = .white
+        
+        selectedCategory = Category(rawValue: sender.configuration!.title!.lowercased())
+        
+        apiService.getTopHeadlineNews(withCategory: selectedCategory) { result in
+            switch result {
+            case .success(let articls):
+                self.evrethingArticls = articls
+                print(articls)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     //Searchbar Target
     @objc func searchBtnPressed() {
@@ -156,23 +180,54 @@ class ExploreVC: UIViewController {
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.placeholder = "Search artists"
         searchController.searchBar.sizeToFit()
-       
-
+        
         navigationItem.searchController = searchController
         searchController.searchBar.becomeFirstResponder()
     }
 }
 
-
-
 extension ExploreVC: UISearchBarDelegate {
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        
+        if let text = self.searchText {
+            apiService.getTopHeadlineNews(withCategory: selectedCategory, withQuery: text) { result in
+                switch result {
+                case .success(let success):
+                    self.evrethingArticls = success
+                case .failure(let failure):
+                    print(failure)
+                }
+            }
+        }
+        return true
+    }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        self.searchText = nil
+        
+        apiService.getNews(page: 20) { result in
+            switch result {
+            case .success(let success):
+                self.evrethingArticls = success
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let failure):
+                print(failure)
+            }
+        }
         navigationItem.searchController?.searchBar.resignFirstResponder()
     }
 }
 
 typealias CollectionDelegates =  UICollectionViewDelegate & UICollectionViewDataSource & UICollectionViewDelegateFlowLayout
+
 extension ExploreVC: CollectionDelegates {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return evrethingArticls.count
@@ -182,13 +237,16 @@ extension ExploreVC: CollectionDelegates {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExploreCell.identifier, for: indexPath) as! ExploreCell
         cell.configure(image: UIImage(named: "ExploreImage")!, title: "Hello Tashkent Hello Samarqand Samarqand Samarqand")
         
-        var image = Data()
-        if let url = URL(string: evrethingArticls[indexPath.row].urlToImage!) {
-            if let data = try? Data(contentsOf: url) {
-                image = data
+        var image: UIImage?
+        if let urlString = evrethingArticls[indexPath.row].urlToImage {
+            if let url = URL(string: urlString) {
+                if let data = try? Data(contentsOf: url) {
+                    image = UIImage(data: data)
+                }
             }
         }
-        cell.configure(image: UIImage(data: image)!,
+        
+        cell.configure(image: image,
                        title: evrethingArticls[indexPath.row].title!)
         return cell
     }
@@ -214,18 +272,20 @@ extension ExploreVC: CollectionDelegates {
     }
     
 }
+
 extension ExploreVC: UISearchControllerDelegate  {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        serchText =  searchBar.text!
+//        searchText =  searchBar.text!
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        serchText =  searchBar.text!
+//        searchText =  searchBar.text!
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-            if let searchText = searchController.searchBar.text {
-               serchText = searchText
-            }
+        if searchController.searchBar.text != nil {
+//            searchText = searchText
         }
+    }
 }

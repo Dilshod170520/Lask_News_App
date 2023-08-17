@@ -7,6 +7,20 @@
 
 import Foundation
 
+enum Category: String {
+    
+    case business = "business"
+    case entertainment = "entertainment"
+    case general = "general"
+    case health = "health"
+    case science = "science"
+    case sports = "sports"
+    case technology = "technology"
+    
+}
+
+//
+
 class ApiService {
     private let apiKey = "bf8cddfa13464e21937c9a90b02725ec"
     
@@ -15,13 +29,22 @@ class ApiService {
     }
     
     // malumot ob kelish - Api Get Data
-    func getTopHeadlineNews(completionHandler: @escaping (Result<[Article], ApiError>) -> ())  {
+    func getTopHeadlineNews(withCategory category: Category? = nil, withQuery searchText: String? = nil, completionHandler: @escaping (Result<[Article], ApiError>) -> ())  {
         // api Url
         let baseUrl = "https://newsapi.org/v2/top-headlines?"
-        // required Parameter: language*, q, country, category and source
-        let language = "uz"
+        
         // finish url
-        let urlString = baseUrl + "sources=bbc-news" + "&apiKey=" + apiKey
+        var urlString = baseUrl + "language=en" + "&apiKey=" + apiKey
+        
+        // required Parameter: language*, q, country, category and source
+        if let category {
+            urlString += "&category=" + category.rawValue
+        }
+        
+        if let searchText {
+            urlString += "&q=" + searchText
+        }
+        
         guard let url = URL(string: urlString) else {
             completionHandler(.failure(ApiError.invalidUrl))
             return

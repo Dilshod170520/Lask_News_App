@@ -54,7 +54,7 @@ class ExploreCell: UICollectionViewCell {
     }
     
     // Configure the cell's content
-    func configure(image: UIImage, title: String) {
+    func configure(image: UIImage?, title: String) {
         imageView.image = image
         titleLabel.text = title
     }

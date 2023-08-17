@@ -33,7 +33,6 @@ class ProfileVC: UIViewController {
         view.backgroundColor = UIColor(named: "grayColor")
         return view
     }()
-    
     //MARK: - UIStack Views
     private let avatarContenerStack: UIStackView = {
         let stack = UIStackView()
