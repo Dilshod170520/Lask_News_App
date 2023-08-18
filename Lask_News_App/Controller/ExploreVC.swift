@@ -26,7 +26,7 @@ class ExploreVC: UIViewController {
     }()
     
     // Array for Category Title
-    var categoryNames: [String] = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
+    var categoryNames: [String] = ["all", "business", "entertainment", "general", "health", "science", "sports", "technology"]
     
     let stack: UIStackView = {
         let stack  = UIStackView()
@@ -47,7 +47,7 @@ class ExploreVC: UIViewController {
     
     let apiService = ApiService()
     var evrethingArticls : [Article] = [ ]
-    
+    var item : UIBarButtonItem?
     
     //MARK: -  ViewDidLoad
     override func viewDidLoad() {
@@ -100,6 +100,9 @@ class ExploreVC: UIViewController {
             button.tag = categoryNames.firstIndex(of: category)!
             
             categoryButtons.append(button)
+            
+            categoryButtons.first?.configuration?.baseBackgroundColor = .systemBlue
+            
             stack.addArrangedSubview(button)
         }
         
@@ -139,12 +142,13 @@ class ExploreVC: UIViewController {
         appearance.titlePositionAdjustment = UIOffset(horizontal: -500,
                                                       vertical: 0)
         navigationController?.navigationBar.standardAppearance = appearance
-        // search button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
-                                                            style: .done,
-                                                            target: self,
-                                                            action: #selector(searchBtnPressed))
-        navigationItem.searchController = searchController
+//         search button
+        item = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass")?.withTintColor(.black, renderingMode: .alwaysOriginal),
+                              style: .done,
+                              target: self,
+                              action: #selector(searchBtnPressed))
+
+        navigationItem.rightBarButtonItem = item
     }
     
     //MARK: - @objc functions
@@ -160,7 +164,7 @@ class ExploreVC: UIViewController {
         sender.configuration?.baseForegroundColor = .white
         
         selectedCategory = Category(rawValue: sender.configuration!.title!.lowercased())
-        
+        print(selectedCategory)
         apiService.getTopHeadlineNews(withCategory: selectedCategory) { result in
             switch result {
             case .success(let articls):
@@ -174,15 +178,19 @@ class ExploreVC: UIViewController {
             }
         }
     }
+    
     //Searchbar Target
     @objc func searchBtnPressed() {
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = true
-        searchController.searchBar.placeholder = "Search artists"
-        searchController.searchBar.sizeToFit()
+        let searchBar = UISearchBar()
         
-        navigationItem.searchController = searchController
-        searchController.searchBar.becomeFirstResponder()
+        searchBar.delegate = self
+        searchBar.showsCancelButton = true
+        searchBar.placeholder = "Search for news"
+//        searchBar.searchBarStyle = .default
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.titleView = searchBar
+        
+        searchBar.becomeFirstResponder()
     }
 }
 
@@ -204,6 +212,9 @@ extension ExploreVC: UISearchBarDelegate {
                 }
             }
         }
+        
+        navigationItem.titleView = nil
+        navigationItem.rightBarButtonItem = item
         return true
     }
     
@@ -222,7 +233,10 @@ extension ExploreVC: UISearchBarDelegate {
                 print(failure)
             }
         }
-        navigationItem.searchController?.searchBar.resignFirstResponder()
+        
+        searchBar.resignFirstResponder()
+        
+        
     }
 }
 

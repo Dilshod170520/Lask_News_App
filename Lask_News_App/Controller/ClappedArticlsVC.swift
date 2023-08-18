@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ClappedArticlsVC: UIViewController {
 
@@ -17,31 +18,49 @@ class ClappedArticlsVC: UIViewController {
         collection.backgroundColor = .tertiarySystemBackground
         
         collection.register(ClappedArticlsCell.self, forCellWithReuseIdentifier: ClappedArticlsCell.identifier)
-        
-        
         return collection
     }()
     
+    var dataCours: [ClappedDB] = []
+                            
+   let appDelegate = UIApplication.shared.delegate as! AppDelegate
+   var context: NSManagedObjectContext {
+            return appDelegate.persistentContainer.viewContext
+        }
+                            
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavBar()
         view.backgroundColor = .red
-    
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         collectionView.delegate  = self
         collectionView.dataSource = self
+
      }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getData()
+    }
+            func getData() {
+                let request: NSFetchRequest = ClappedDB.fetchRequest()
+            if let data = try? context.fetch(request) {
+                dataCours = data
+                collectionView.reloadData()
+            }
+        }
+   
+                        
     func setNavBar() {
         navigationItem.title = "Clappped Articls"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"),
                                                            style: .done,
                                                            target: self, action: #selector(backPressed))
-                
+        
     }
     
     @objc func  backPressed() {
@@ -51,11 +70,19 @@ class ClappedArticlsVC: UIViewController {
 
 extension ClappedArticlsVC: UICollectionViewDataSource, UICollectionViewDelegate , UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return dataCours.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClappedArticlsCell.identifier, for: indexPath) as! ClappedArticlsCell
-        cell.set(image: UIImage(named: "kingfisher"), title: "I am gonna go Samarqand ")
+        let current = dataCours[indexPath.row]
+        
+        if  let image = dataCours[indexPath.row].urlToImage {
+            cell.imageView.image = UIImage(data: image)
+        }
+        if  let _ = current.title {
+            cell.titleLabel.text = current.title
+        }
+       
         return cell
     }
 

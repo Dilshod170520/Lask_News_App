@@ -12,7 +12,7 @@ class ClappedArticlsCell: UICollectionViewCell {
     
     static let identifier = "ClappedArticlsCell"
     
-    private let titleLabel: UILabel = {
+       let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20 , weight: .semibold)
         label.textColor = .label
@@ -21,7 +21,7 @@ class ClappedArticlsCell: UICollectionViewCell {
         return label
     }()
     
-    private let imageView: UIImageView = {
+      let imageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleToFill
         img.layer.cornerRadius = 10

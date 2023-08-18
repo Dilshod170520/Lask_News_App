@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import CoreData
+
 
 class ArticleViewController: UIViewController {
     
     let backgroundImageview: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "noImage")
         img.contentMode = .scaleAspectFill
         return img
     }()
@@ -117,11 +118,30 @@ class ArticleViewController: UIViewController {
         return img
     }()
     
+    
+    let appDelegate = UIApplication.shared.delegate  as! AppDelegate
+    var context: NSManagedObjectContext {
+        return appDelegate.persistentContainer.viewContext
+    }
+    
     //MARK: - Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewConstents()
+       
+        let newArticl = ClappedDB(context: context)
+        if let titleLabel = titlLabel.text  {
+            newArticl.title = titleLabel
+        }
+        if let  img = backgroundImageview.image {
+            newArticl.urlToImage = img.pngData()
+        }
+      
+        appDelegate.saveContext()
     }
+    
+
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         contenerView.roundCorners(corners: [.topLeft, .topRight], radius: 35)
@@ -132,13 +152,11 @@ class ArticleViewController: UIViewController {
                           for: .touchUpInside)
     }
     @objc func likeBtnPressed() {
-        
         likeBtn.tintColor = .blue
     }
     
     //MARK: - Setup View Constents
     func setupViewConstents() {
-        
         contenerView.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(24)
