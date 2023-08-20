@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SkeletonView
 
 class HomeVC: UIViewController {
     
@@ -35,9 +36,58 @@ class HomeVC: UIViewController {
     var everyThingArticles: [Article] = []
     //   var fetchedData: [FetchedData] = []
     
+    
+    let shimmerContentView: UIView = {
+        let shimmerView = UIView()
+        shimmerView.backgroundColor = .white
+        
+        let topHidlineView = UIView()
+        topHidlineView.backgroundColor = .darkGray
+        
+        let lettileView = UIView()
+        lettileView.backgroundColor = .darkGray
+        
+        let lettileView2 = UIView()
+        lettileView.backgroundColor = .darkGray
+        
+        let topstackView = UIStackView(arrangedSubviews: [topHidlineView, lettileView, lettileView2])
+        topstackView.axis = .vertical
+        topstackView.spacing = 10
+        topstackView.distribution = .fillProportionally
+        topstackView.alignment = .fill
+    
+        lettileView.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
+        lettileView2.frame = CGRect(x: 0, y: 0, width: 100 , height: 50)
+        
+        let secondStack = UIStackView(arrangedSubviews: [topstackView, topstackView])
+        secondStack.axis = .horizontal
+        secondStack.spacing = 20
+        secondStack.alignment = .fill
+        secondStack.distribution = .fillEqually
+        
+        let thirdStack = UIStackView(arrangedSubviews: [secondStack, secondStack])
+        secondStack.axis = .vertical
+        secondStack.spacing = 20
+        secondStack.alignment = .fill
+        secondStack.distribution = .fillEqually
+    
+        let mainStack = UIStackView(arrangedSubviews: [topstackView, thirdStack])
+        secondStack.axis = .horizontal
+        secondStack.spacing = 20
+        secondStack.alignment = .fill
+        secondStack.distribution = .fillEqually
+        
+ 
+        shimmerView.addSubview(mainStack)
+        mainStack.frame = shimmerView.frame
+        return shimmerView
+    }()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .tertiarySystemBackground
+        shimmerEffect()
         setupNavBar()
         setupSubviews()
         setupColView()
@@ -53,6 +103,7 @@ class HomeVC: UIViewController {
                 print(error)
             }
         }
+        
         apiService.getNews(page: 1) { result in
             switch result {
             case .success(let articles):
@@ -65,6 +116,30 @@ class HomeVC: UIViewController {
                 print(error)
             }
         }
+    }
+    
+    //MARK: - SHimmer
+    
+    func shimmerEffect() {
+        view.addSubview(shimmerContentView)
+        shimmerContentView.frame = view.frame
+        
+        let gradentLayer = CAGradientLayer()
+        gradentLayer.colors = [UIColor.clear.cgColor, UIColor.white.cgColor, UIColor.clear.cgColor]
+        gradentLayer.locations = [0, 0.5, 1 ]
+        
+        gradentLayer.frame = shimmerContentView.frame
+        gradentLayer.transform = CATransform3DMakeRotation(20, 0, 0, 1)
+        
+        shimmerContentView.layer.mask = gradentLayer
+        
+        let animation = CABasicAnimation(keyPath: "transform")
+        animation.duration = 3
+        animation.fromValue = -view.frame.width
+        animation.toValue = view.frame.width
+        animation.repeatCount = 15
+        
+        gradentLayer.add(animation, forKey: "animation")
     }
     
     //MARK: - Setup Functions
@@ -222,71 +297,28 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = colView.dequeueReusableCell(withReuseIdentifier: "large", for: indexPath) as! LargeNewsColViewCell
-            
-            cell.titleLbl.text = topArticles[indexPath.row].title
-            cell.categoryLbl.text = topArticles[indexPath.row].author
-            // url to Image -> Data -> Image
-            // url checking
-            // URL String = articles[indexPath.row].urlToImage
-            // string -> URL
-            if let url = URL(string: topArticles[indexPath.row].urlToImage!) {
-                
-                // url -> Data
-                if let data = try? Data(contentsOf: url) {
-                    // data -> Image
-                    cell.bannerImgView.image = UIImage(data: data)
-                }
-            }
-            return cell
-        case 1:
-            let cell = colView.dequeueReusableCell(withReuseIdentifier: "large", for: indexPath) as! LargeNewsColViewCell
-            
-            cell.titleLbl.text = everyThingArticles[indexPath.row].title
-            cell.categoryLbl.text = everyThingArticles[indexPath.row].author
-            // url to Image -> Data -> Image
-            // url checking
-            // URL String = articles[indexPath.row].urlToImage
-            // string -> URL
-            if let url = URL(string: everyThingArticles[indexPath.row].urlToImage!) {
-            // url -> Data
-                if let data = try? Data(contentsOf: url) {
-                    // data -> Image
-                    cell.bannerImgView.image = UIImage(data: data)
-                }
-            }
-            return cell
-        default:
-            let cell = colView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ExploreCell
-            return cell
+        
+        let cell = colView.dequeueReusableCell(withReuseIdentifier: "large", for: indexPath) as! LargeNewsColViewCell
+        
+        let article = (indexPath.section == 0) ? topArticles[indexPath.item] : everyThingArticles[indexPath.item]
+        cell.titleLbl.text = article.title
+        cell.categoryLbl.text = article.author
+        if let urlString = article.urlToImage {
+            cell.bannerImgView.kf.setImage(with: URL(string: urlString),
+                                           placeholder: UIImage(named: "articleBackgroundImage")
+            )
         }
+        
+        return cell
     }
+    
     // did select - > To Next VC : More info
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ArticleViewController()
         vc.modalPresentationStyle = .fullScreen
-        switch indexPath.section {
-        case 0:
-            if  let url = URL(string: topArticles[indexPath.row].urlToImage!) {
-                if let data = try? Data(contentsOf: url) {
-                    vc.backgroundImageview.image = UIImage(data: data)
-                }
-            }
-            vc.dataLabal.text = topArticles[indexPath.row].author
-            vc.titlLabel.text = topArticles[indexPath.row].title
-            vc.descreptionLabel.text = topArticles[indexPath.row].description
-        default:
-            if  let url = URL(string: everyThingArticles[indexPath.row].urlToImage!) {
-                if let data = try? Data(contentsOf: url) {
-                    vc.backgroundImageview.image = UIImage(data: data)
-                }
-            }
-            vc.dataLabal.text = everyThingArticles[indexPath.row].author
-            vc.titlLabel.text = everyThingArticles[indexPath.row].title
-            vc.descreptionLabel.text = everyThingArticles[indexPath.row].description
-        }
+        
+        vc.article = (indexPath.section == 0) ? topArticles[indexPath.item] : everyThingArticles[indexPath.item]
+        
         self.present(vc, animated: true)
     }
 }

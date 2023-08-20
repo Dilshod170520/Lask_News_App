@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 
 class ClappedArticlsVC: UIViewController {
-
+    
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -21,13 +21,13 @@ class ClappedArticlsVC: UIViewController {
         return collection
     }()
     
-    var dataCours: [ClappedDB] = []
-                            
-   let appDelegate = UIApplication.shared.delegate as! AppDelegate
-   var context: NSManagedObjectContext {
-            return appDelegate.persistentContainer.viewContext
-        }
-                            
+    var dataCours: [Article] = []
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var context: NSManagedObjectContext {
+        return appDelegate.persistentContainer.viewContext
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavBar()
@@ -38,22 +38,32 @@ class ClappedArticlsVC: UIViewController {
         }
         collectionView.delegate  = self
         collectionView.dataSource = self
-
-     }
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getData()
-    }
-            func getData() {
-                let request: NSFetchRequest = ClappedDB.fetchRequest()
-            if let data = try? context.fetch(request) {
-                dataCours = data
-                collectionView.reloadData()
+        //         getData()
+        //        func getData() {
+        let request: NSFetchRequest = ClappedArticleDB.fetchRequest()
+        
+        if let clapperdData = try? context.fetch(request).first {
+            
+            let arteclesDB = clapperdData.articles?.allObjects  as! [ArticleDB]
+            
+            arteclesDB.forEach { arteclesDB in
+                let article = Article(articleDB: arteclesDB)
+                self.dataCours.append(article)
+                
             }
+            collectionView.reloadData()
         }
-   
-                        
+        //        }
+        
+    }
+    
+    
+    
     func setNavBar() {
         navigationItem.title = "Clappped Articls"
         
@@ -65,27 +75,22 @@ class ClappedArticlsVC: UIViewController {
     
     @objc func  backPressed() {
         dismiss(animated: true)
-    }    
+    }
 }
 
 extension ClappedArticlsVC: UICollectionViewDataSource, UICollectionViewDelegate , UICollectionViewDelegateFlowLayout{
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataCours.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClappedArticlsCell.identifier, for: indexPath) as! ClappedArticlsCell
-        let current = dataCours[indexPath.row]
         
-        if  let image = dataCours[indexPath.row].urlToImage {
-            cell.imageView.image = UIImage(data: image)
-        }
-        if  let _ = current.title {
-            cell.titleLabel.text = current.title
-        }
-       
+        cell.configur(article: dataCours[indexPath.item])
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
         return UIEdgeInsets(top: 25,

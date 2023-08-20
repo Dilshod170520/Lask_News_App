@@ -5,7 +5,8 @@
 //  Created by MacBook Pro on 15/08/23.
 //
 
-import Foundation
+import UIKit
+import CoreData
 
 enum Category: String {
     
@@ -145,6 +146,51 @@ class ApiService {
         // Task.resume()
         task.resume()
     }
+    
+    func getNews(withTitle title: String, completion: @escaping (Result<[Article], Error>) -> ()) {
+        
+        let baseUrl = "https://newsapi.org/v2/everything?"
+        
+        // finish url
+        var urlString = baseUrl + "searchIn=title" + "&apiKey=" + apiKey + "&q=" + title
+        
+        // required Parameter: language*, q, country, category and source
+        
+        
+        guard let url = URL(string: urlString) else {
+            completion(.failure(ApiError.invalidUrl))
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+            
+//            // handling repsonse
+//            guard let response = response as? HTTPURLResponse else {
+//                return
+//            }
+            
+            // handling error
+            // handling data
+            guard let data = data, error == nil else {
+                completion(.failure(ApiError.networkError))
+                return
+            }
+            // decode
+            let decoder = JSONDecoder()
+            do {
+                let responseData = try decoder.decode(ApiResponse.self, from: data)
+                if let articles = responseData.articles {
+                    completion(.success(articles))
+                } else {
+                    completion(.success([]))
+                }
+            } catch {
+                completion(.failure(ApiError.failWhileDecoding))
+                print(error)
+            }
+        }
+        task.resume()
+    }
 }
 struct ApiResponse: Decodable {
     let status: String?
@@ -152,13 +198,41 @@ struct ApiResponse: Decodable {
     let articles: [Article]?
 }
 struct Article: Decodable {
+    
     let author: String?
     let title: String?
     let description: String?
     let url: String?
     let urlToImage: String?
     let publishedAt: String?
-    let content: String?
+    
+    init(articleDB: ArticleDB) {
+        
+        self.title = articleDB.title
+        self.author = articleDB.author
+        self.description = articleDB.desc
+        self.url = articleDB.url
+        self.urlToImage = articleDB.img
+        self.publishedAt = articleDB.publishedAt
+        
+    }
+    
+    func toCoreDataModel() -> ArticleDB {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        let articleDB = ArticleDB(context: context)
+        articleDB.title = self.title
+        articleDB.desc = self.description
+        articleDB.author = self.author
+        articleDB.url = self.url
+        articleDB.img = self.urlToImage
+        articleDB.publishedAt = self.publishedAt
+//        articleDB.readAt = Date()
+        return articleDB
+    }
+    
 }
 
 enum ApiError: Error {

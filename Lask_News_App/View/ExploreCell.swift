@@ -54,9 +54,12 @@ class ExploreCell: UICollectionViewCell {
     }
     
     // Configure the cell's content
-    func configure(image: UIImage?, title: String) {
-        imageView.image = image
-        titleLabel.text = title
+    func configure(article: Article) {
+        titleLabel.text = article.title
+        
+        if let urlString = article.urlToImage {
+            imageView.kf.setImage(with: URL(string: urlString))
+        }
     }
 }
 

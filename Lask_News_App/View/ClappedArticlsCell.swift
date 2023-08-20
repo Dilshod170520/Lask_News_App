@@ -50,9 +50,11 @@ class ClappedArticlsCell: UICollectionViewCell {
         }
     }
     
-    func set(image: UIImage? , title: String) {
-        imageView.image = image
-        titleLabel.text = title
+    func configur(article: Article) {
+        titleLabel.text = article.title
+        if let urlString = article.urlToImage {
+            imageView.kf.setImage(with: URL(string: urlString))
+        }
     }
     
     required init?(coder: NSCoder) {

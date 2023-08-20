@@ -156,6 +156,15 @@ class ProfileVC: UIViewController {
         setTableVeiw()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let readTitles = UserDefaults.standard.array(forKey: "read") as? [String] {
+            articleCountLable.text = "\(readTitles.count)"
+        } else {
+            articleCountLable.text = "0"
+        }
+    }
+    
     func setTableVeiw() {
         tableView.delegate = self
         tableView.dataSource = self

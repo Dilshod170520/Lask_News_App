@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ClappedDB" representedClassName=".ClappedDB" syncable="YES" codeGenerationType="class">
+    <entity name="ArticleDB" representedClassName="ArticleDB" syncable="YES" codeGenerationType="class">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="img" attributeType="String"/>
+        <attribute name="publishedAt" optional="YES" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
-        <attribute name="urlToImage" optional="YES" attributeType="Binary"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="clappedArticles" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClappedArticleDB" inverseName="articles" inverseEntity="ClappedArticleDB"/>
+        <relationship name="offlineArticles" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OfflineArticleDB" inverseName="articles" inverseEntity="OfflineArticleDB"/>
+        <relationship name="readArticles" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ReadArticleDB" inverseName="articles" inverseEntity="ReadArticleDB"/>
+    </entity>
+    <entity name="ClappedArticleDB" representedClassName="ClappedArticleDB" syncable="YES" codeGenerationType="class">
+        <relationship name="articles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ArticleDB" inverseName="clappedArticles" inverseEntity="ArticleDB"/>
+    </entity>
+    <entity name="OfflineArticleDB" representedClassName="OfflineArticleDB" syncable="YES" codeGenerationType="class">
+        <relationship name="articles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ArticleDB" inverseName="offlineArticles" inverseEntity="ArticleDB"/>
+    </entity>
+    <entity name="ReadArticleDB" representedClassName="ReadArticleDB" syncable="YES" codeGenerationType="class">
+        <relationship name="articles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ArticleDB" inverseName="readArticles" inverseEntity="ArticleDB"/>
     </entity>
 </model>

@@ -8,7 +8,8 @@ target 'Lask_News_App' do
 
 	pod 'SnapKit'
 	pod 'BubbleTabBar'
-pod 'Alamofire'
-      
+	pod 'Alamofire'
+	pod 'Kingfisher'  
+        pod 'SkeletonView'
 
 end

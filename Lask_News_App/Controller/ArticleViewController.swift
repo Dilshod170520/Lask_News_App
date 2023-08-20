@@ -7,10 +7,12 @@
 
 import UIKit
 import CoreData
-
+import Kingfisher
 
 class ArticleViewController: UIViewController {
     
+    
+    //MARK: - UI Components
     let backgroundImageview: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
@@ -118,29 +120,84 @@ class ArticleViewController: UIViewController {
         return img
     }()
     
-    
+    //MARK: - Data Variables
     let appDelegate = UIApplication.shared.delegate  as! AppDelegate
     var context: NSManagedObjectContext {
         return appDelegate.persistentContainer.viewContext
     }
     
+    var article: Article?
+    
+    
     //MARK: - Life Cycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupViewConstents()
        
-        let newArticl = ClappedDB(context: context)
-        if let titleLabel = titlLabel.text  {
-            newArticl.title = titleLabel
-        }
-        if let  img = backgroundImageview.image {
-            newArticl.urlToImage = img.pngData()
-        }
+//        let newArticl = ClappedDB(context: context)
+//        if let titleLabel = titlLabel.text  {
+//            newArticl.title = titleLabel
+//        }
+//        if let  img = backgroundImageview.image {
+//            newArticl.urlToImage = img.pngData()
+//        }
       
-        appDelegate.saveContext()
+//        appDelegate.saveContext()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        titlLabel.text = article!.title
+        descreptionLabel.text = article!.description
+        
+        if let urlString = article!.urlToImage {
+            backgroundImageview.kf.setImage(with: URL(string: urlString))
+        }
+        
 
+    }
+    
+    func checkForRead(article: Article) {
+        
+        let articleDB = article.toCoreDataModel()
+        // core data read db
+        let request: NSFetchRequest<ReadArticleDB> = ReadArticleDB.fetchRequest()
+        // check
+        if let readArticleDB = try? context.fetch(request).first {
+            // check before adding
+            articleDB.readArticles = readArticleDB
+        //readArticleDB.articles?.adding(articleDB)
+        } else {
+            let readArticleDB = ReadArticleDB(context: self.context)
+            articleDB.readArticles = readArticleDB
+         //readArticleDB.articles?.append(articleDB)
+        }
+        appDelegate.saveContext()
+        
+    }
+    
+    
+    
+    
+    func addForClapped(title: String) {
+        
+        if var titlesInUser = UserDefaults.standard.array(forKey: "clapped") as? [String?] {
+            
+            if titlesInUser.contains(title) {
+                titlesInUser.removeAll { text in
+                    return text == title
+                }
+            } else {
+                titlesInUser.append(title)
+            }
+        } else {
+            UserDefaults.standard.set([title], forKey: "clapped")
+        }
+        
+    }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -150,9 +207,32 @@ class ArticleViewController: UIViewController {
         likeBtn.addTarget(self,
                           action: #selector(likeBtnPressed),
                           for: .touchUpInside)
+        let articleDB = article!.toCoreDataModel()
     }
     @objc func likeBtnPressed() {
-        likeBtn.tintColor = .blue
+        
+        checkForClapped(article: article!)
+        
+    }
+    
+    func checkForClapped(article: Article) {
+        
+        let articleDB = article.toCoreDataModel()
+        // core data read db
+        let request: NSFetchRequest<ClappedArticleDB> = ClappedArticleDB.fetchRequest()
+        // check
+        if let clappedDB = try? context.fetch(request).first {
+            // check before adding
+            articleDB.clappedArticles = clappedDB
+        } else {
+            let clappedArteclesDB = ClappedArticleDB(context: self.context)
+            articleDB.clappedArticles = clappedArteclesDB
+        }
+        appDelegate.saveContext()
+        
+        likeBtn.tintColor = (likeBtn.tintColor == .blue) ? .tertiarySystemBackground : .blue
+        
+        
     }
     
     //MARK: - Setup View Constents

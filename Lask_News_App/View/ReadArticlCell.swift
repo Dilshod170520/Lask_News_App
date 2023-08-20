@@ -51,8 +51,11 @@ class ReadArticlCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configur(imege: UIImage?, title: String) {
-        imageView.image = imege
-        titleLabel.text = title
-   }
+    func configure(article: Article) {
+        titleLabel.text = article.title
+        
+        if let urlString = article.urlToImage {
+            imageView.kf.setImage(with: URL(string: urlString))
+        }
+    }
 }

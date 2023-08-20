@@ -249,19 +249,8 @@ extension ExploreVC: CollectionDelegates {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExploreCell.identifier, for: indexPath) as! ExploreCell
-        cell.configure(image: UIImage(named: "ExploreImage")!, title: "Hello Tashkent Hello Samarqand Samarqand Samarqand")
         
-        var image: UIImage?
-        if let urlString = evrethingArticls[indexPath.row].urlToImage {
-            if let url = URL(string: urlString) {
-                if let data = try? Data(contentsOf: url) {
-                    image = UIImage(data: data)
-                }
-            }
-        }
-        
-        cell.configure(image: image,
-                       title: evrethingArticls[indexPath.row].title!)
+        cell.configure(article: evrethingArticls[indexPath.item])
         return cell
     }
     
